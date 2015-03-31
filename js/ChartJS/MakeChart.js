@@ -1,3 +1,7 @@
+var obj = { 
+    "data1": [1,2,3,4,5],
+    "data2": [6,7,8,9,10]
+}
 var chart = c3.generate({
 	  size: {
         height: 350,
@@ -5,9 +9,9 @@ var chart = c3.generate({
     },
     bindto: '#chart',
     data: {
-      json: {
-        data1: [30, 200, 100, 400, 150, 250]
-      },
+      columns: [
+        ['Data set 1'].concat(obj.data1)
+      ],
 	   types: {
             data1: 'area'
         },
