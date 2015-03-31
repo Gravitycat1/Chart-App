@@ -13,6 +13,7 @@ function Runner () {}
  *    
  */
  
+  var priceData;
   var i = 0;
   
 Runner.loadData = function loadData(AppData, stockId){
@@ -23,7 +24,7 @@ Runner.loadData = function loadData(AppData, stockId){
 	AppData.v1.fundamental.GET(stockId,'epsbase')
 	.then(function(data){
 
-		Runner.createTable(data.response.data,'fundamental-data')
+	console.log(data);
 
 	}, function(jqXHR){
 
@@ -70,7 +71,8 @@ Runner.loadData = function loadData(AppData, stockId){
 	//-----------------------------------------
 	AppData.v1.pricedata.GET(stockId)
 	.then(function(data){
-		Runner.createTable(data.response.data.slice(0,20),'price-data')
+		console.log(data);
+		priceData = data.response.data.slice(0,20)
 
 	}, function(jqXHR){
 
