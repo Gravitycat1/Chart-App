@@ -72,8 +72,10 @@ Runner.loadData = function loadData(AppData, stockId){
 	AppData.v1.pricedata.GET(stockId)
 	.then(function(data){
 		console.log(data);
-		priceData = data.response.data.slice(0,20)
-
+		priceData = data.response.data.slice(0,50);
+		console.log(priceData);
+		
+		return priceData;
 	}, function(jqXHR){
 
 		throw new Error('Failed to load data!',jqXHR);

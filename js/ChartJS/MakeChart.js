@@ -18,7 +18,7 @@ var chart = c3.generate({
     }, 
 	grid: {
         x: {
-            show: true
+            show: false
         },
         y: {
             show: true
