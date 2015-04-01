@@ -2,7 +2,7 @@
 
 StockRender.AppRender.register({
 	id: "49e90eee6ce1942a94136fc8db19319c",
-	name: "Tables",
+	name: "Price Chart",
 	version: "1.0.0",
 	defaults: {
 		terminal: {

@@ -12,7 +12,7 @@ window.onload = function() {
 		bindto: '#chart',
 		data: {
 		  columns: [
-			['Data set 1'].concat(priceData)
+			['Price'].concat(priceData)
 		  ],
 		   types: {
 				data1: 'area'
