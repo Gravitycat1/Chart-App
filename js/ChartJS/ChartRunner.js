@@ -70,7 +70,6 @@ Runner.loadData = function loadData(AppData, stockId){
 	//-----------------------------------------
 	AppData.v1.pricedata.GET(stockId)
 	.then(function(data){
-		var lengthOfResponse = data.response.length;
 
 		for(var i = data.response.data.slice(0,365).length - 1; i >= 0; i--){
 

@@ -42,7 +42,7 @@ StockRender.AppRender.register({
 
 		/*Setting click events*/
 		$('#ticker-btn').click(function(){
-			Runner.toggleOverhead();					
+			Runner.toggleOverhead();	
 			Runner.loadData(AppData, $('#stock')[0].value);
 			return;
 		});
@@ -50,6 +50,7 @@ StockRender.AppRender.register({
 		$('#stock').keypress(function(e){
 			if( e.which === 13 ) {
 				Runner.toggleOverhead();
+				loadData();
 				Runner.loadData(AppData, $('#stock')[0].value);
 				return;
 			}
