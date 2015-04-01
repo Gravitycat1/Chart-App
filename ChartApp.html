@@ -16,6 +16,9 @@
 		<!-- CSS -->
 			<link rel="stylesheet" type="text/css" href="css/loading-anim.css">
 			<link rel="stylesheet" type="text/css" href="css/main.css">
+			<link rel="stylesheet" type="text/css" href="css/TableWindow.css">
+			<link rel="stylesheet" type="text/css" href="css/style.css">
+			<link rel="stylesheet" type="text/css" media="screen" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" />
 		<!-- CSS -->
 		<!-- Supplementary Code -->
 		
@@ -30,10 +33,21 @@
 		
 	</head>
 	<body>
-	Chart App Test
-	<input id="stock" type="text" name="currency" maxlength= "4"></input>
-	<div id= "chart"></div>
+	<h1>Chart App Test</h1>
 	
-	<script src="js/ChartJS/MakeChart.js"></script>
+	<div class="container">
+		<div class="heading">
+			 <div class="col">Price Chart</div>
+			 <span class="ion-gear-b" data-pack="default" onclick ="settings();"></span>
+		</div>
+		<div class="table-row">
+				<input id="stock" class= "stockInput" type="text" name="currency"></input>
+				<div id= "chart" style= "left: -90px;"></div>
+				<script src="js/ChartJS/MakeChart.js"></script>
+		</div>
+	</div>
+	
+	
+	
 	</body>
 </html>

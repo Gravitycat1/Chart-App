@@ -1,0 +1,16 @@
+/***************************
+****************************
+Styling for the Autocomplete
+****************************
+***************************/
+.autocomplete-suggestions { border: 1px solid #999; background: #fff; cursor: default; overflow: auto; }
+.autocomplete-suggestion { padding: 5px 5px; font-size: 1.0em; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #B8DBFF; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399ff; }
+
+/***************************
+****************************
+Adds the styling for the setting icon in the header
+****************************
+***************************/
+.ion-gear-b {float: right; margin-right: 0.7em; cursor: pointer;}
