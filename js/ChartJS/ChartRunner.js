@@ -12,8 +12,7 @@ function Runner () {}
  * @return {AppData}      
  *    
  */
- 
-  var priceData;
+  var priceData = new Array(41.28, 41.52, 40.6, 40.68, 41.17, 42.13, 42.12, 42.39, 42.05, 41.45);
   var i = 0;
   
 Runner.loadData = function loadData(AppData, stockId){
@@ -71,11 +70,17 @@ Runner.loadData = function loadData(AppData, stockId){
 	//-----------------------------------------
 	AppData.v1.pricedata.GET(stockId)
 	.then(function(data){
-		console.log(data);
-		priceData = data.response.data.slice(0,50);
-		console.log(priceData);
+		var lengthOfResponse = data.response.length;
+
+		for(var i = data.response.data.slice(0,20).length - 1; i >= 0; i--){
+
+        priceData[i] = data.response.data.slice(0,20)[i][1];
 		
-		return priceData;
+		
+		}
+      
+		console.log(priceData);
+
 	}, function(jqXHR){
 
 		throw new Error('Failed to load data!',jqXHR);

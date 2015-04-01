@@ -46,6 +46,7 @@ Runner.loadData = function loadData(AppData, stockId){
 	AppData.v1.pricedata.GET(stockId)
 	.then(function(data){
 		Runner.createTable(data.response.data.slice(0,20),'price-data')
+		console.log(data.response.data.slice(0,20).length)
 
 	}, function(jqXHR){
 
@@ -102,6 +103,7 @@ Runner.createTable = function createTable(data, containerId) {
  	var div = document.getElementById(containerId);
  	var ul = div.getElementsByTagName('ul')[0]
  	var li; var span; var price; var date;	
+	var test =  new Array();
 
  	for (var i = data.length - 1; i >= 0; i--) {
 		//-----------------------------------------
@@ -110,6 +112,9 @@ Runner.createTable = function createTable(data, containerId) {
 		date = new Date(data[i][0]);
 		date = (date.getUTCMonth()+1) + '/' + date.getDate() + '/' +  date.getUTCFullYear();
 		price = data[i][1];
+		test[i] = data[i][1];
+		console.log(price);
+
 
 		//-----------------------------------------
 		//	Append to li
@@ -124,6 +129,7 @@ Runner.createTable = function createTable(data, containerId) {
 		span.innerHTML = 'date: ' + date + ', price: ' + price;
 		ul.appendChild(li);
 	};
+	console.log(test);
 
 	if( !div ) throw new Error('no container!');
 
