@@ -15,9 +15,12 @@ window.onload = function() {
 			['Price'].concat(priceData)
 		  ],
 		   types: {
-				data1: 'area'
+				Price: 'area'
 			},
 		}, 
+		point: {
+        show: false
+		},
 		grid: {
 			x: {
 				show: false

@@ -72,9 +72,9 @@ Runner.loadData = function loadData(AppData, stockId){
 	.then(function(data){
 		var lengthOfResponse = data.response.length;
 
-		for(var i = data.response.data.slice(0,50).length - 1; i >= 0; i--){
+		for(var i = data.response.data.slice(0,365).length - 1; i >= 0; i--){
 
-        priceData[i] = data.response.data.slice(0,50)[i][1];
+        priceData[i] = data.response.data.slice(0,365)[i][1];
 		
 		
 		}
