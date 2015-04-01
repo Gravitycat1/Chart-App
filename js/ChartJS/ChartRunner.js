@@ -12,7 +12,7 @@ function Runner () {}
  * @return {AppData}      
  *    
  */
-  var priceData = new Array(41.28, 41.52, 40.6, 40.68, 41.17, 42.13, 42.12, 42.39, 42.05, 41.45);
+  var priceData = new Array();
   var i = 0;
   
 Runner.loadData = function loadData(AppData, stockId){
@@ -72,9 +72,9 @@ Runner.loadData = function loadData(AppData, stockId){
 	.then(function(data){
 		var lengthOfResponse = data.response.length;
 
-		for(var i = data.response.data.slice(0,20).length - 1; i >= 0; i--){
+		for(var i = data.response.data.slice(0,50).length - 1; i >= 0; i--){
 
-        priceData[i] = data.response.data.slice(0,20)[i][1];
+        priceData[i] = data.response.data.slice(0,50)[i][1];
 		
 		
 		}
