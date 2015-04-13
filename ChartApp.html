@@ -43,7 +43,7 @@
 			 <span class="ion-gear-b" data-pack="default" onclick ="settings();"></span>
 		</div>
 		<div class="table-row">
-				<input id="stock" class= "stockInput" type="text" name="currency"></input><input type="submit" value="Submit" id="ticker-btn" onClick = "loadChart();">
+				<input id="stock" class= "stockInput" type="text" name="currency"></input><input type="submit" value="Submit" id="ticker-btn" onClick = "Runner.loadData(AppData, $('#stock')[0].value);">
 				
 				<div id= "chart"></div>
 				
