@@ -14,3 +14,9 @@ Adds the styling for the setting icon in the header
 ****************************
 ***************************/
 .ion-gear-b {float: right; margin-right: 0.7em; cursor: pointer;}
+
+.zoom {
+	color: blue; 
+	cursor: pointer; 
+	text-decoration: underline;
+	}

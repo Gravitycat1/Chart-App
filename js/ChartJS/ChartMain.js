@@ -42,15 +42,17 @@ StockRender.AppRender.register({
 
 		/*Setting click events*/
 		$('#ticker-btn').click(function(){
-			Runner.loadData(AppData, $('#stock')[0].value);
-			loadChart();
-			
-			return;
+				Runner.loadData(AppData, $('#stock')[0].value);
+				
+			    loadChart();
+				return;
 		});
 
 		$('#stock').keypress(function(e){
 			if( e.which === 13 ) {
 				Runner.loadData(AppData, $('#stock')[0].value);
+				
+			    loadChart();
 				return;
 			}
 		})

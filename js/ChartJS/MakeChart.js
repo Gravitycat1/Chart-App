@@ -42,7 +42,6 @@
 
 
 function loadChart() {
- 
  	console.log(priceData);
 			var chart = c3.generate({
 			  size: {
