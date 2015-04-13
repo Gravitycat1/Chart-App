@@ -57,6 +57,9 @@ function loadChart() {
 					Price: 'area'
 				},
 			}, 
+			subchart: {
+			show: true	
+			},
 			point: {
 	        show: false
 			},
