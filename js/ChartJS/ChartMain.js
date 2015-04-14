@@ -42,15 +42,28 @@ StockRender.AppRender.register({
 
 		/*Setting click events*/
 		$('#ticker-btn').click(function(){
-			Runner.loadData(AppData, $('#stock')[0].value);
-			loadChart();
-			
-			return;
+				console.log("before clear");
+
+				priceData.length = 0;
+
+				console.log("before while");
+
+				while(priceData.length = 0){
+					Runner.loadData(AppData, $('#stock')[0].value);
+				}
+
+				console.log("after while");
+
+				$.when(priceData.length != 0);
+				loadChart();
+				console.log("after when");
+				return;
 		});
 
 		$('#stock').keypress(function(e){
 			if( e.which === 13 ) {
 				Runner.loadData(AppData, $('#stock')[0].value);
+				
 				return;
 			}
 		})

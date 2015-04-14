@@ -38,11 +38,10 @@
 	});
 }*/
 
+
+//loads in the chart
+
 function loadChart() {
- var oldPriceData = null;
- 	while ( oldPriceData = priceData) {
- 		Runner.loadData(AppData, $('#stock')[0].value);
- 	}
  		var chart = c3.generate({
 		  size: {
 			height: 350,
