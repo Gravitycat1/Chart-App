@@ -42,6 +42,9 @@ StockRender.AppRender.register({
 
 		/*Setting click events*/
 		$('#ticker-btn').click(function(){
+
+				//this is for testing purposes
+
 				console.log("before clear");
 
 				priceData.length = 0;
@@ -57,6 +60,7 @@ StockRender.AppRender.register({
 				$.when(priceData.length != 0);
 				loadChart();
 				console.log("after when");
+				//test end
 				return;
 		});
 
@@ -64,6 +68,7 @@ StockRender.AppRender.register({
 			if( e.which === 13 ) {
 				Runner.loadData(AppData, $('#stock')[0].value);
 				
+
 				return;
 			}
 		})
