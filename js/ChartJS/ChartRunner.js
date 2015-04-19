@@ -13,6 +13,7 @@ function Runner() {}
  *    
  */
   var priceData = new Array();
+  var dateOfData = new Array();
   var i = 0;
   var flag;
 Runner.loadData = function loadData(AppData, stockId){
@@ -74,11 +75,14 @@ Runner.loadData = function loadData(AppData, stockId){
 		for(var i = data.response.data.slice(0,365).length - 1; i >= 0; i--){
 
         priceData[i] = data.response.data.slice(0,365)[i][1];
+		dateOfData[i] = data.response.data.slice(0,365)[i][0];
+		
 	
 		
 		}
-
+      console.log(data);
       console.log(priceData);
+	   console.log(dateOfData);
 
 	}, function(jqXHR){
 

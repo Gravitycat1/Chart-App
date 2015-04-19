@@ -48,13 +48,11 @@
 				close: 120
 			}
 		];
-		define([
-			'd3',
-			'components/sl',
-			'utils/yScaleTransform'
-		], function (d3, sl, yScaleTransform) {
-			'use strict';
-
+		
+		var s1 = d3.select("body")
+					.append("svg")
+					.attr("width", 500)
+					.attr("height", 500);
 			sl.series.comparison = function () {
 
 				var xScale = d3.time.scale(),
@@ -236,7 +234,7 @@
 
 				return comparison;
 			};
-		});
+
 		sl.svg.gridlines = function () {
 
 			var xScale = d3.time.scale(),
