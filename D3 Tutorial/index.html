@@ -5,12 +5,16 @@
         <title>D3 Test</title>
         <script type="text/javascript" src="d3/d3.js"></script>
 		<style>
-		div.bar {
-			display: inline-block;
-			width: 20px;
-			height: 75px;   /* We'll override this later */
-			margin-right: 2px;
-			background-color: teal;
+		.axis path,
+		.axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
+
+		.axis text {
+			font-family: sans-serif;
+			font-size: 11px;
 		}
 		</style>
     </head>
@@ -19,7 +23,7 @@
 		//Width and height
 			var w = 800;
 			var h = 600;
-			var padding = 20;  // <-- New!
+			var padding = 30;  // <-- New!
           var dataset = [
                 [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
                 [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
@@ -33,11 +37,21 @@
 		  var rScale = d3.scale.linear()
                 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
                 .range([2, 5]);
+		 var xAxis = d3.svg.axis()
+                  .scale(xScale)
+                  .orient("bottom")
+				  .ticks(5);  //Set rough # of ticks;
+	
+		var yAxis = d3.svg.axis()
+                  .scale(yScale)
+                  .orient("left")
+                  .ticks(5);
 			//Create SVG element
 			var svg = d3.select("body")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
+					.append("svg")
+					.attr("width", w)
+					.attr("height", h);
+			//Generate circles			
 			svg.selectAll("circle")
 			   .data(dataset)
 			   .enter()
@@ -52,6 +66,14 @@
 			   .attr("r", function(d) {
 					return rScale(d[1]);
 				});
+			svg.append("g")
+				.attr("class", "axis")  //Assign "axis" class
+				.attr("transform", "translate(0," + (h - padding) + ")") //Translate to the bottom of the svg subtract 20 pixels.
+				.call(xAxis);
+			svg.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(" + padding + ",0)")
+				.call(yAxis);
 				
         </script>
     </body>

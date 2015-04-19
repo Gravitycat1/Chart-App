@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Mult Line Test Framework</title>
+        <script type="text/javascript" src="d3/d3.js"></script>
+		<style>
+		.axis path,
+		.axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
+
+		.axis text {
+			font-family: sans-serif;
+			font-size: 11px;
+		}
+		</style>
+    </head>
+    <body>
+        <script type="text/javascript">
+		// Example data
+		var data = [
+			{
+				name: "Series1",
+				data: ohlcData
+			},
+			{
+				name: "Series2",
+				data: ohlcData
+			}
+		];
+
+		var ohlcData = [
+			{
+				date:  new Date(2014,8,25),
+				open:  120,
+				high:  121,
+				low:   119,
+				close: 120.5
+			},
+			{
+				date:  new Date(2014,8,26),
+				open:  121,
+				high:  122,
+				low:   119,
+				close: 120
+			}
+		];
+		define([
+			'd3',
+			'components/sl',
+			'utils/yScaleTransform'
+		], function (d3, sl, yScaleTransform) {
+			'use strict';
+
+			sl.series.comparison = function () {
+
+				var xScale = d3.time.scale(),
+					yScale = d3.scale.linear();
+
+				var cachedData, cachedScale;
+
+				var findIndex = function (seriesData, date) {
+					var bisect = d3.bisector(
+						function (d) {
+							return d.date;
+						}).left;
+
+					var initialIndex = bisect(seriesData, date);
+					if (!initialIndex) {
+						initialIndex += 1;
+					}
+					return initialIndex;
+				};
+
+				var percentageChange = function (seriesData, initialDate) {
+					var initialIndex = findIndex(seriesData, initialDate) - 1;
+					var initialClose = seriesData[initialIndex].close;
+
+					return seriesData.map(function (d) {
+						return {
+							date: d.date,
+							change: (d.close / initialClose) - 1
+						};
+					});
+				};
+
+				var rebaseChange = function (seriesData, initialDate) {
+					var initialIndex = findIndex(seriesData, initialDate) - 1;
+					var initialChange = seriesData[initialIndex].change;
+
+					return seriesData.map(function (d) {
+						return {
+							date: d.date,
+							change: d.change - initialChange
+						};
+					});
+				};
+
+				 var calculateYDomain = function (data, xDomain) {
+					var start, end;
+
+					data = data.map(function (series) {
+						series = series.data;
+						start = findIndex(series,xDomain[0]) - 1;
+						end = findIndex(series,xDomain[1]) + 1;
+						return series.slice(start, end);
+					});
+
+					var allPoints = data.reduce(function(prev, curr) {
+						return prev.concat(curr);
+					}, []);
+
+					if (allPoints.length) {
+						return d3.extent(allPoints, function(d) {
+							return d.change;
+						});
+					} else {
+						return [0, 0];
+					}
+				};
+
+				var color = d3.scale.category10();
+
+				var line = d3.svg.line()
+					.interpolate("linear")
+					.x(function (d) {
+						return xScale(d.date);
+					})
+					.y(function (d) {
+						return yScale(d.change);
+					});
+
+				var comparison = function (selection) {
+					var series, lines;
+
+					selection.each(function (data) {
+
+						data = data.map(function (d) {
+							return {
+								name: d.name,
+								data: percentageChange(d.data, xScale.domain()[0])
+							};
+						});
+
+						cachedData = data; // Save for rebasing.
+
+						color.domain(data.map(function (d) {
+							return d.name;
+						}));
+
+						yScale.domain(calculateYDomain(data, xScale.domain()));
+						cachedScale = yScale.copy();
+
+						series = d3.select(this).selectAll('.comparison-series').data([data]);
+						series.enter().append('g').classed('comparison-series', true);
+
+						lines = series.selectAll('.line')
+							.data(data, function(d) {
+								return d.name;
+							})
+							.enter().append("path")
+							.attr("class", "line")
+							.attr("d", function (d) {
+								return line(d.data);
+							})
+							.style("stroke", function (d) {
+								return color(d.name);
+							});
+
+						series.selectAll('.line')
+							.attr("d", function (d) {
+								return line(d.data);
+							});
+					});
+				};
+
+				comparison.geometricZoom = function (selection, xTransformTranslate, xTransformScale) {
+					// Apply a transformation for each line to update its position wrt the new initial date,
+					// then apply the yScale transformation to reflect the updated yScale domain.
+
+					var initialIndex,
+						yTransform;
+
+					var lineTransform = function (initialChange) {
+						var yTransformLineTranslate = cachedScale(0) - cachedScale(initialChange);
+
+						yTransformLineTranslate *= yTransform.scale;
+						yTransformLineTranslate += yTransform.translate;
+
+						return 'translate(' + xTransformTranslate + ',' + yTransformLineTranslate + ')' +
+							' scale(' + xTransformScale + ',' + yTransform.scale + ')';
+					};
+
+					var domainData = cachedData.map(function (d) {
+						return {
+							name: d.name,
+							data: rebaseChange(d.data, xScale.domain()[0])
+						}
+					});
+
+					yScale.domain(calculateYDomain(domainData, xScale.domain()));
+					yTransform = yScaleTransform(cachedScale, yScale);
+
+					cachedData = cachedData.map(function (d) {
+						initialIndex = findIndex(d.data, xScale.domain()[0]) - 1;
+						return {
+							name: d.name,
+							data: d.data,
+							transform: lineTransform(d.data[initialIndex].change)
+						};
+					});
+
+					selection.selectAll('.line')
+						.data(cachedData)
+						.attr('transform', function (d) { return d.transform; });
+				};
+
+				comparison.xScale = function (value) {
+					if (!arguments.length) {
+						return xScale;
+					}
+					xScale = value;
+					return comparison;
+				};
+
+				comparison.yScale = function (value) {
+					if (!arguments.length) {
+						return yScale;
+					}
+					yScale = value;
+					return comparison;
+				};
+
+				return comparison;
+			};
+		});
+		sl.svg.gridlines = function () {
+
+			var xScale = d3.time.scale(),
+				yScale = d3.scale.linear(),
+				xTicks = 10,
+				yTicks = 10;
+
+			var xLines = function (data, grid) {
+				var xlines = grid.selectAll('.x')
+					.data(data);
+				xlines
+					.enter().append('line')
+					.attr({
+						'class': 'x',
+						'x1': function(d) { return xScale(d);},
+						'x2': function(d) { return xScale(d);},
+						'y1': yScale.range()[0],
+						'y2': yScale.range()[1]
+					});
+				xlines
+					.attr({
+						'x1': function(d) { return xScale(d);},
+						'x2': function(d) { return xScale(d);},
+						'y1': yScale.range()[0],
+						'y2': yScale.range()[1]
+					});
+				xlines.exit().remove();
+			};
+
+			var yLines = function (data, grid) {
+			    var ylines = grid.selectAll('.y')
+                    .data(data);
+				ylines
+					.enter().append('line')
+					.attr({
+						'class': 'y',
+						'x1': xScale.range()[0],
+						'x2': xScale.range()[1],
+						'y1': function(d) { return yScale(d);},
+						'y2': function(d) { return yScale(d);}
+					});
+				ylines
+					.attr({
+						'x1': xScale.range()[0],
+						'x2': xScale.range()[1],
+						'y1': function(d) { return yScale(d);},
+						'y2': function(d) { return yScale(d);}
+					});
+				ylines.exit().remove();
+			};
+
+			var gridlines = function (selection) {
+				var grid, xTickData, yTickData;
+
+				selection.each(function () {
+					xTickData = xScale.ticks(xTicks);
+					yTickData = yScale.ticks(yTicks);
+
+					grid = d3.select(this).selectAll('.gridlines').data([[xTickData, yTickData]]);
+					grid.enter().append('g').classed('gridlines', true);
+					xLines(xTickData, grid);
+					yLines(yTickData, grid);
+				});
+			};
+
+			gridlines.xScale = function (value) {
+				 if (!arguments.length) {
+					return yScale;
+				}
+				yScale = value;
+				return gridlines;
+			};
+
+			gridlines.yScale = function (value) {
+				 if (!arguments.length) {
+					return yScale;
+				}
+				yScale = value;
+				return gridlines;
+			};
+
+			gridlines.xTicks = function (value) {
+				if (!arguments.length) {
+					return xTicks;
+				}
+				xTicks = value;
+				return gridlines;
+			};
+
+			gridlines.yTicks = function (value) {
+			    if (!arguments.length) {
+					return yTicks;
+				}
+				yTicks = value;
+				return gridlines;
+			};
+
+			return gridlines;
+		};
+		// Draw gridlines
+		plotArea
+			.call(gridlines);
+
+		// Draw series.
+		plotArea.append('g')
+			.attr('class', 'series')
+			.datum(data)
+			.call(series);
+
+		function zoomed() {
+
+			var xDomain = xScale.domain(),
+				xRange = xScale.range(),
+				translate = zoom.translate()[0];
+
+			if (xDomain[0] < fromDate) {
+				translate = translate - xScale(fromDate) + xRange[0];
+			} else if (xDomain[1] > toDate) {
+				translate = translate - xScale(toDate) + xRange[1];
+			}
+			zoom.translate([translate, 0]);
+
+			g.select('.series')
+				.call(series);
+
+			g.select('.x.axis')
+				.call(xAxis);
+
+			g.select('.y.axis')
+				.call(yAxis);
+
+			plotArea
+				.call(gridlines);
+		}
+
+		yAxis.tickFormat(d3.format('%'));
+        </script>
+    </body>
+</html>
