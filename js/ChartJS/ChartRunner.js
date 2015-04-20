@@ -74,15 +74,14 @@ Runner.loadData = function loadData(AppData, stockId){
 
 		for(var i = data.response.data.slice(0,365).length - 1; i >= 0; i--){
 
-        priceData[i] = data.response.data.slice(0,365)[i][1];
+        priceData[i] = data.response.data.slice(0,365)[i];
 		dateOfData[i] = data.response.data.slice(0,365)[i][0];
 		
 	
 		
 		}
       console.log(data);
-      console.log(priceData);
-	   console.log(dateOfData);
+      console.log(priceData); //price data array with every information
 
 	}, function(jqXHR){
 

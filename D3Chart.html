@@ -51,8 +51,6 @@
 
 		<!-- Load d3.js and c3.js -->
 		<script src="js/ChartJS/D3JS/d3.min.js" charset="utf-8"></script>
-		<script src="js/ChartJS/D3JS/c3-0.4.10/c3.min.js"></script>
-		<script src="js/ChartJS/D3JS/d3-master/d3.min.js"></script>
 		
 
 		
@@ -87,15 +85,13 @@
 			width = 960 - margin.left - margin.right,
 			height = 500 - margin.top - margin.bottom,
 			height2 = 500 - margin2.top - margin2.bottom;
-		var xScale = d3.scale.linear().range([margin.left, width]).domain([d3.min(data, function(d) {
+		var xScale = d3.scale.linear().range([0, width]).domain([d3.min(data, function(d) {
 			return d.year;
 		}), d3.max(data, function(d) {
 			return d.year;
 		})]);
 		var x2Scale = d3.scale.linear().range([[margin.left, width]]);
-		var yScale = d3.scale.linear().range([height,0]).domain([d3.min(data, function(d) {
-           return d.sale;
-        }), d3.max(data, function(d) {
+		var yScale = d3.scale.linear().range([height,0]).domain([0, d3.max(data, function(d) {
 			return d.sale;
 		})]);
 		var y2Scale = d3.scale.linear().range([height2, 0]);
@@ -110,7 +106,7 @@
 							.on("brush", brushed);
 		
 		//Append or place objects on svg canvas
-		var lineGen = d3.svg.area()
+		var area = d3.svg.area()
 				  .x(function(d) {
 					return xScale(d.year);
 				  })
@@ -120,10 +116,14 @@
 				  })
 				  .interpolate("linear");
 		var area2 = d3.svg.area()
-					.interpolate("linear")
-					.x(function(d) { return x2Scale(d.year); })
-					.y0(height2)
-					.y1(function(d) { return y2Scale(d.sale); });
+				  .x(function(d) {
+					return x2Scale(d.year);
+				  })
+				  .y0(height2)
+				  .y1(function(d) {
+					return y2Scale(d.sale);
+				  })
+				  .interpolate("linear");
 					
 		var svg = d3.select("body").append("svg")
 									.attr("width", width + margin.left + margin.right)
@@ -144,18 +144,17 @@
 			.attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 		
 		focus.append('path')
+		     .datum(data)
 		     .attr("class", "area")
-		     .attr('d', lineGen(data))
-		     .attr('fill', 'none');
-				  
+		     .attr('d', area)		  
 		focus.append("g")
 				.attr("class","axis")
 				.attr("transform", "translate(0," + height + ")")
 				.call(xAxis);
 		focus.append("g")
 				.attr("class","axis")
-				.attr("transform", "translate(" + (margin.left) + ",0)")
 				.call(yAxis);
+				
 		context.append("path")
 				  .datum(data)
 				  .attr("class", "area")
@@ -169,14 +168,16 @@
 	    context.append("g")
 				  .attr("class", "x brush")
 				  .call(brush)
-		.selectAll("rect")
+				  .selectAll("rect")
 				  .attr("y", -6)
 				  .attr("height", height2 + 7);
+				  
 	    function brushed() {
-		  x.domain(brush.empty() ? x2Scale.domain() : brush.extent());
-		  focus.select(".area").attr("d", lineGen);
+		  xScale.domain(brush.empty() ? x2Scale.domain() : brush.extent());
+		  focus.select(".area").attr("d", area);
 		  focus.select(".x.axis").call(xAxis);
 		}
+		
 		</script>
     </div>
 	
