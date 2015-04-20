@@ -3,7 +3,7 @@
 
 	<head>
 		<title>D3ChartTest</title>
-		
+		<meta charset="utf-8">
 		<!-- Framework -->
 		<script src="vendors/stockrender-apprender.1.0.0.min.js"></script>
 		<!-- Framework -->
@@ -90,16 +90,25 @@
 		}), d3.max(data, function(d) {
 			return d.year;
 		})]);
-		var x2Scale = d3.scale.linear().range([[margin.left, width]]);
+		var x2Scale = d3.scale.linear().range([[margin.left, width]]).domain([d3.min(data, function(d) {
+			return d.year;
+		}), d3.max(data, function(d) {
+			return d.year;
+		})]);
+		
+		
 		var yScale = d3.scale.linear().range([height,0]).domain([0, d3.max(data, function(d) {
 			return d.sale;
 		})]);
-		var y2Scale = d3.scale.linear().range([height2, 0]);
+		
+		var y2Scale = d3.scale.linear().range([height2, 0]).domain([0, d3.max(data, function(d) {
+			return d.sale;
+		})]);
 		
 		//Scales
 		var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize(-height).outerTickSize(0).tickPadding(5);
 		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom")
-		var yAxis = d3.svg.axis().scale(yScale).orient("left").innerTickSize(-width + 40).outerTickSize(0).tickPadding(5);
+		var yAxis = d3.svg.axis().scale(yScale).orient("left").innerTickSize(-width).outerTickSize(0).tickPadding(5);
 		
 		var brush = d3.svg.brush()
 							.x(x2Scale)
