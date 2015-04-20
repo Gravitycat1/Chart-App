@@ -90,7 +90,8 @@
 		}), d3.max(data, function(d) {
 			return d.year;
 		})]);
-		var x2Scale = d3.scale.linear().range([[margin.left, width]]).domain([d3.min(data, function(d) {
+		//Not being used atm
+		var x2Scale = d3.scale.linear().range([0, width]).domain([d3.min(data, function(d) {
 			return d.year;
 		}), d3.max(data, function(d) {
 			return d.year;
@@ -105,13 +106,13 @@
 			return d.sale;
 		})]);
 		
-		//Scales
+		//Axes
 		var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize(-height).outerTickSize(0).tickPadding(5);
-		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom")
+		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom") //x2Scale switched to xScale
 		var yAxis = d3.svg.axis().scale(yScale).orient("left").innerTickSize(-width).outerTickSize(0).tickPadding(5);
 		
 		var brush = d3.svg.brush()
-							.x(x2Scale)
+							.x(x2Scale) //x2Scale was switched to xScale
 							.on("brush", brushed);
 		
 		//Append or place objects on svg canvas
@@ -126,7 +127,7 @@
 				  .interpolate("linear");
 		var area2 = d3.svg.area()
 				  .x(function(d) {
-					return x2Scale(d.year);
+					return x2Scale(d.year); //Switched x2Scale to xScale
 				  })
 				  .y0(height2)
 				  .y1(function(d) {
@@ -182,10 +183,11 @@
 				  .attr("height", height2 + 7);
 				  
 	    function brushed() {
-		  xScale.domain(brush.empty() ? x2Scale.domain() : brush.extent());
+		  xScale.domain(brush.empty() ? x2Scale.domain() : brush.extent()); //switched x2Scale to xScale
 		  focus.select(".area").attr("d", area);
-		  focus.select(".x.axis").call(xAxis);
+		  focus.select(".x.axis").call(xAxis2);
 		}
+
 		
 		</script>
     </div>
