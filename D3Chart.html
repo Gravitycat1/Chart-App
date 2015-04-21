@@ -29,6 +29,7 @@
 			}
 			.area {
 			  fill: rgba(48, 120, 208, 0.6);
+			  clip-path: url(#clip);
 			}
 			.tick text{
 			  font-size: 12px;
@@ -85,6 +86,8 @@
 			width = 960 - margin.left - margin.right,
 			height = 500 - margin.top - margin.bottom,
 			height2 = 500 - margin2.top - margin2.bottom;
+		
+		var parseDate = d3.time.format("%b %Y").parse;
 		var xScale = d3.scale.linear().range([0, width]).domain([d3.min(data, function(d) {
 			return d.year;
 		}), d3.max(data, function(d) {
@@ -111,11 +114,11 @@
 		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom") //x2Scale switched to xScale
 		var yAxis = d3.svg.axis().scale(yScale).orient("left").innerTickSize(-width).outerTickSize(0).tickPadding(5);
 		
+		//Defines the brush.
 		var brush = d3.svg.brush()
 							.x(x2Scale) //x2Scale was switched to xScale
 							.on("brush", brushed);
-		
-		//Append or place objects on svg canvas
+							
 		var area = d3.svg.area()
 				  .x(function(d) {
 					return xScale(d.year);
@@ -134,29 +137,33 @@
 					return y2Scale(d.sale);
 				  })
 				  .interpolate("linear");
-					
+		
+        //Defines the canvas where the chart will be generated		
 		var svg = d3.select("body").append("svg")
 									.attr("width", width + margin.left + margin.right)
 									.attr("height", height + margin.top + margin.bottom);
-									
+		
+		//Assures that the area of the chart remains within the axes, not the canvas.							
 		svg.append("defs").append("clipPath")
 			.attr("id", "clip")
 			.append("rect")
 			.attr("width", width)
 			.attr("height", height);
 			
+		//Defines the chart.	
 		var focus = svg.append("g")
 			.attr("class", "focus")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+        //Defines the navigator
 		var context = svg.append("g")
 			.attr("class", "context")
 			.attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 		
+		//Generates the actual chart.
 		focus.append('path')
 		     .datum(data)
 		     .attr("class", "area")
-		     .attr('d', area)		  
+		     .attr('d', area);		  
 		focus.append("g")
 				.attr("class","axis")
 				.attr("transform", "translate(0," + height + ")")
@@ -164,7 +171,8 @@
 		focus.append("g")
 				.attr("class","axis")
 				.call(yAxis);
-				
+		
+        // Generates the navigator so that the user can navigate through the data	
 		context.append("path")
 				  .datum(data)
 				  .attr("class", "area")
@@ -181,13 +189,19 @@
 				  .selectAll("rect")
 				  .attr("y", -6)
 				  .attr("height", height2 + 7);
-				  
+		
+        //Scroll Function		
 	    function brushed() {
 		  xScale.domain(brush.empty() ? x2Scale.domain() : brush.extent()); //switched x2Scale to xScale
-		  focus.select(".area").attr("d", area);
-		  focus.select(".x.axis").call(xAxis2);
+		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
+		  focus.select(".axis").call(xAxis); //Targets the x axis, so that it can be translated.
 		}
-
+		
+		function type(d) {
+		  d.year = parseDate(d.year);
+		  d.sales = +d.sales;
+		  return d;
+		}
 		
 		</script>
     </div>
