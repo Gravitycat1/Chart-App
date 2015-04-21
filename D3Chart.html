@@ -90,15 +90,15 @@
 		var parseDate = d3.time.format("%Y").parse;
 		
 		var xScale = d3.time.scale().range([0, width]).domain([d3.min(data, function(d) {
-			return d.year;
+			return parseDate(d.year);
 		}), d3.max(data, function(d) {
-			return d.year;
+			return parseDate(d.year);
 		})]);
 		//being used atm
 		var x2Scale = d3.time.scale().range([0, width]).domain([d3.min(data, function(d) {
-			return d.year;
+			return parseDate(d.year);
 		}), d3.max(data, function(d) {
-			return d.year;
+			return parseDate(d.year);
 		})]);
 		
 		
@@ -122,7 +122,7 @@
 							
 		var area = d3.svg.area()
 				  .x(function(d) {
-					return xScale(d.year);
+					return xScale(parseDate(d.year));
 				  })
 				  .y0(height)
 				  .y1(function(d) {
@@ -131,7 +131,7 @@
 				  .interpolate("linear");
 		var area2 = d3.svg.area()
 				  .x(function(d) {
-					return x2Scale(d.year); //Switched x2Scale to xScale
+					return x2Scale(parseDate(d.year)); //Switched x2Scale to xScale
 				  })
 				  .y0(height2)
 				  .y1(function(d) {
