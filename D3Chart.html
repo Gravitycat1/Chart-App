@@ -62,7 +62,7 @@
 		<script>
 		var data = [{
 			"sale": "202",
-			"year": "2000"
+			"year": "1999"
 		}, {
 			"sale": "215",
 			"year": "2001"
@@ -87,14 +87,15 @@
 			height = 500 - margin.top - margin.bottom,
 			height2 = 500 - margin2.top - margin2.bottom;
 		
-		var parseDate = d3.time.format("%b %Y").parse;
-		var xScale = d3.scale.linear().range([0, width]).domain([d3.min(data, function(d) {
+		var parseDate = d3.time.format("%Y").parse;
+		
+		var xScale = d3.time.scale().range([0, width]).domain([d3.min(data, function(d) {
 			return d.year;
 		}), d3.max(data, function(d) {
 			return d.year;
 		})]);
 		//being used atm
-		var x2Scale = d3.scale.linear().range([0, width]).domain([d3.min(data, function(d) {
+		var x2Scale = d3.time.scale().range([0, width]).domain([d3.min(data, function(d) {
 			return d.year;
 		}), d3.max(data, function(d) {
 			return d.year;
@@ -111,7 +112,7 @@
 		
 		//Axes
 		var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize(-height).outerTickSize(0).tickPadding(5);
-		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom") //x2Scale switched to xScale
+		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom"); //x2Scale switched to xScale
 		var yAxis = d3.svg.axis().scale(yScale).orient("left").innerTickSize(-width).outerTickSize(0).tickPadding(5);
 		
 		//Defines the brush.
@@ -199,9 +200,10 @@
 		
 		function type(d) {
 		  d.year = parseDate(d.year);
-		  d.sales = +d.sales;
+		  d.sale = +d.sale;
 		  return d;
 		}
+
 		
 		</script>
     </div>
