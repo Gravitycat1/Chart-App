@@ -89,13 +89,13 @@
 		
 		var parseDate = d3.time.format("%Y").parse;
 		
-		var xScale = d3.time.scale().range([0, width]).domain([d3.min(data, function(d) {
+		var xScale = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
 			return parseDate(d.year);
 		}), d3.max(data, function(d) {
 			return parseDate(d.year);
 		})]);
 		//being used atm
-		var x2Scale = d3.time.scale().range([0, width]).domain([d3.min(data, function(d) {
+		var x2Scale = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
 			return parseDate(d.year);
 		}), d3.max(data, function(d) {
 			return parseDate(d.year);
