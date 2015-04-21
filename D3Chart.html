@@ -28,7 +28,7 @@
 				font-size: 13px;
 			}
 			.area {
-			  fill: rgba(48, 120, 208, 0.6);
+			  fill: rgba(215, 40, 40, 0.6);
 			  clip-path: url(#clip);
 			}
 			.tick text{
@@ -78,6 +78,12 @@
 		}, {
 			"sale": "176",
 			"year": "2010"
+		}, {
+			"sale": "200",
+			"year": "2011"
+		}, {
+			"sale": "301",
+			"year": "2012"
 		}];
 		
 									
@@ -155,6 +161,7 @@
 		var focus = svg.append("g")
 			.attr("class", "focus")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
         //Defines the navigator
 		var context = svg.append("g")
 			.attr("class", "context")
@@ -172,6 +179,8 @@
 		focus.append("g")
 				.attr("class","axis")
 				.call(yAxis);
+		
+		//Append volume chart here.
 		
         // Generates the navigator so that the user can navigate through the data	
 		context.append("path")
