@@ -23,8 +23,9 @@ var data = [{
 			"sale": "301",
 			"year": "2012"
 		}];
+		//add sample volume data
 		
-									
+        // Add height and margins for the volume chart		
 		var margin = {top: 10, right: 15, bottom: 300, left: 40},
 			margin2 = {top: 560, right: 10, bottom: 20, left: 40},
 			width = 960 - margin.left - margin.right,
@@ -33,22 +34,28 @@ var data = [{
 		
 		var parseDate = d3.time.format("%Y").parse;
 		
+		//x scale for main chart
 		var xScale = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
 			return parseDate(d.year);
 		}), d3.max(data, function(d) {
 			return parseDate(d.year);
 		})]);
-		//being used atm
+		
+		//x scale for navigator
 		var x2Scale = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
 			return parseDate(d.year);
 		}), d3.max(data, function(d) {
 			return parseDate(d.year);
 		})]);
 		
+		//Add x scale for volume chart
+		 
+		//y scale for main chart
 		var yScale = d3.scale.linear().range([height,0]).domain([0, d3.max(data, function(d) {
 			return d.sale;
 		})]);
 		
+		//y scale for navigator
 		var y2Scale = d3.scale.linear().range([height2, 0]).domain([0, d3.max(data, function(d) {
 			return d.sale;
 		})]);
@@ -57,6 +64,8 @@ var data = [{
 		var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize(-height).outerTickSize(0).tickPadding(5);
 		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom"); //x2Scale switched to xScale
 		var yAxis = d3.svg.axis().scale(yScale).orient("left").innerTickSize(-width).outerTickSize(0).tickPadding(5);
+		//Add x and y axis for volume chart
+		
 		
 		//Defines the brush.
 		var brush = d3.svg.brush()
@@ -72,6 +81,9 @@ var data = [{
 					return yScale(d.sale);
 				  })
 				  .interpolate("linear");
+		
+		//Define the bars for the volume chart.
+		
 		var area2 = d3.svg.area()
 				  .x(function(d) {
 					return x2Scale(parseDate(d.year)); //Switched x2Scale to xScale
@@ -98,6 +110,8 @@ var data = [{
 		var focus = svg.append("g")
 			.attr("class", "focus")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+		//Define the bar chart.
 		
         //Defines the navigator
 		var context = svg.append("g")
