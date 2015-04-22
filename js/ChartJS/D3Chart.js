@@ -29,8 +29,7 @@ var data = [{
 			margin2 = {top: 560, right: 10, bottom: 20, left: 40},
 			width = 960 - margin.left - margin.right,
 			height = 700 - margin.top - margin.bottom,
-			height2 = 640 - margin2.top - margin2.bottom
-			height3;
+			height2 = 640 - margin2.top - margin2.bottom;
 		
 		var parseDate = d3.time.format("%Y").parse;
 		
@@ -41,13 +40,6 @@ var data = [{
 		})]);
 		//being used atm
 		var x2Scale = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
-			return parseDate(d.year);
-		}), d3.max(data, function(d) {
-			return parseDate(d.year);
-		})]);
-		
-		//Scale for volume
-		var x3Scale = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
 			return parseDate(d.year);
 		}), d3.max(data, function(d) {
 			return parseDate(d.year);
