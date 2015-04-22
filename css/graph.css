@@ -1,0 +1,27 @@
+.axis path,
+            .axis line{
+			  fill: none;
+			  stroke: #000;
+			  shape-rendering: crispEdges;
+			}
+			.axis text {
+				font-family: Lato;
+				font-size: 13px;
+			}
+			.area {
+			  fill: rgba(215, 40, 40, 0.6);
+			  clip-path: url(#clip);
+			}
+			.tick text{
+			  font-size: 12px;
+			}
+
+			.tick line{
+			  opacity: 0.2;
+			}
+			
+			.brush .extent {
+			  stroke: #fff;
+			  fill-opacity: .125;
+			  shape-rendering: crispEdges;
+			}
