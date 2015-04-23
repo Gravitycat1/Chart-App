@@ -36,7 +36,7 @@ var data = [{
         // Add height and margins for the volume chart (added margins and height for the volume chart.)	
 		var margin = {top: 10, right: 15, bottom: 300, left: 40},
 			margin2 = {top: 560, right: 10, bottom: 20, left: 40},
-			margin3 =  {top: 560, right: 10, bottom: 20, left: 40},
+			margin3 =  {top: 460, right: 10, bottom: 50, left: 40},
 			width = 960 - margin.left - margin.right,
 			height = 700 - margin.top - margin.bottom,
 			height2 = 640 - margin2.top - margin2.bottom,
