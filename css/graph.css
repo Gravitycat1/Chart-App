@@ -25,3 +25,7 @@
 			  fill-opacity: .125;
 			  shape-rendering: crispEdges;
 			}
+			.volume {
+				stroke: none;
+				fill: MediumPurple;
+			}

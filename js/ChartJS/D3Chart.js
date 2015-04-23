@@ -1,48 +1,51 @@
 var data = [{
 			"sale": "202",
 			"year": "1999",
-			"volume": "1999"
+			"volume": "60"
 		}, {
 			"sale": "215",
 			"year": "2001",
-			"volume": "1999"
+			"volume": "30"
 		}, {
 			"sale": "179",
 			"year": "2002",
-			"volume": "1999"
+			"volume": "100"
 		}, {
 			"sale": "199",
 			"year": "2003",
-			"volume": "1999"
+			"volume": "150"
 		}, {
 			"sale": "134",
 			"year": "2005",
-			"volume": "1999"
+			"volume": "135"
 		}, {
 			"sale": "176",
 			"year": "2010",
-			"volume": "1999"
+			"volume": "195"
 		}, {
 			"sale": "200",
 			"year": "2011",
-			"volume": "1999"
+			"volume": "205"
 		}, {
 			"sale": "301",
 			"year": "2012",
-			"volume": "1999"
+			"volume": "155"
 		}];
 		//add sample volume data
 		
         // Add height and margins for the volume chart (added margins and height for the volume chart.)	
-		var margin = {top: 10, right: 15, bottom: 300, left: 40},
+		var margin = {top: 10, right: 30, bottom: 300, left: 40},
 			margin2 = {top: 560, right: 10, bottom: 20, left: 40},
-			margin3 =  {top: 460, right: 10, bottom: 50, left: 40},
+			margin3 =  {top: 430, right: 10, bottom: 50, left: 40},
 			width = 960 - margin.left - margin.right,
 			height = 700 - margin.top - margin.bottom,
 			height2 = 640 - margin2.top - margin2.bottom,
-			height3 = 540 - margin3.top - margin3.bottom;
+			height3 = 600 - margin3.top - margin3.bottom;
 		
+		//Format years to scalable time
 		var parseDate = d3.time.format("%Y").parse;
+		
+		//X SCALE//
 		
 		//x scale for main chart
 		var xScale = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
@@ -58,12 +61,16 @@ var data = [{
 			return parseDate(d.year);
 		})]);
 		
-		//Add x scale for volume chart
-
+		//Y SCALES//
 		 
 		//y scale for main chart
 		var yScale = d3.scale.linear().range([height,0]).domain([0, d3.max(data, function(d) {
 			return d.sale;
+		})]);
+		
+		//Add y scale for volume chart
+		var y3Scale = d3.scale.linear().range([height3, 0]).domain([0, d3.max(data, function(d) { 
+			return d.volume; 
 		})]);
 		
 		//y scale for navigator
@@ -74,8 +81,9 @@ var data = [{
 		//Axes
 		var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize(-height).outerTickSize(0).tickPadding(5);
 		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom"); //x2Scale switched to xScale
-		var yAxis = d3.svg.axis().scale(yScale).orient("left").innerTickSize(-width).outerTickSize(0).tickPadding(5);
-		//Add x and y axis for volume chart
+		var yAxis = d3.svg.axis().scale(yScale).orient("right").innerTickSize(-width).outerTickSize(0).tickPadding(5);
+		var yAxis2 = d3.svg.axis().scale(y3Scale).orient("right").tickFormat(d3.format("0s")).ticks(5).innerTickSize(-width).outerTickSize(0).tickPadding(5);; //Y Axis for the volume chart
+		
 		
 		
 		//Defines the brush.
@@ -94,9 +102,9 @@ var data = [{
 				  .interpolate("linear");
 		
 		//Define the bars for the volume chart.
-		var volume = d3.svg.line()
+		var volumeBars = d3.svg.line()
 					.x(function(d) { return x(d.year); })
-					.y(function(d) { return yVolume(d.volume); });
+					.y(function(d) { return y3Scale(d.volume); });
 		
 		var area2 = d3.svg.area()
 				  .x(function(d) {
@@ -126,6 +134,9 @@ var data = [{
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 		
 		//Define the bar chart.
+		var volumeChart = svg.append("g")
+			.attr("class", "focus")
+			.attr("transform", "translate(" + margin3.left + "," + margin3.top + ")");
 		
         //Defines the navigator
 		var context = svg.append("g")
@@ -143,9 +154,25 @@ var data = [{
 				.call(xAxis);
 		focus.append("g")
 				.attr("class","axis")
+				.attr("transform", "translate(" + width + ",0)")
 				.call(yAxis);
 		
 		//Append volume chart here.
+		var barPadding = 0.5;
+		volumeChart.selectAll("rect")
+					.data(data)
+					.enter()
+					.append("rect")
+					.attr("y", function(d, i) { return height3 - d.volume; })
+					.attr("x", function(d, i) { return i * width; })
+					.attr("width", 2)
+					.attr("height", function(d, i) { return d.volume; })
+					.attr("class", "volume");		  
+		
+		volumeChart.append("g")
+				.attr("class","axis")
+				.attr("transform", "translate(" + width + ",0)")
+				.call(yAxis2);
 		
         // Generates the navigator so that the user can navigate through the data	
 		context.append("path")
