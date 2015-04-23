@@ -1,27 +1,35 @@
 var data = [{
 			"sale": "202",
-			"year": "1999"
+			"year": "1999",
+			"volume": "1999"
 		}, {
 			"sale": "215",
-			"year": "2001"
+			"year": "2001",
+			"volume": "1999"
 		}, {
 			"sale": "179",
-			"year": "2002"
+			"year": "2002",
+			"volume": "1999"
 		}, {
 			"sale": "199",
-			"year": "2003"
+			"year": "2003",
+			"volume": "1999"
 		}, {
 			"sale": "134",
-			"year": "2005"
+			"year": "2005",
+			"volume": "1999"
 		}, {
 			"sale": "176",
-			"year": "2010"
+			"year": "2010",
+			"volume": "1999"
 		}, {
 			"sale": "200",
-			"year": "2011"
+			"year": "2011",
+			"volume": "1999"
 		}, {
 			"sale": "301",
-			"year": "2012"
+			"year": "2012",
+			"volume": "1999"
 		}];
 		//add sample volume data
 		
@@ -49,6 +57,7 @@ var data = [{
 		})]);
 		
 		//Add x scale for volume chart
+
 		 
 		//y scale for main chart
 		var yScale = d3.scale.linear().range([height,0]).domain([0, d3.max(data, function(d) {
@@ -83,6 +92,9 @@ var data = [{
 				  .interpolate("linear");
 		
 		//Define the bars for the volume chart.
+		var volume = d3.svg.line()
+					.x(function(d) { return x(d.year); })
+					.y(function(d) { return yVolume(d.volume); });
 		
 		var area2 = d3.svg.area()
 				  .x(function(d) {
