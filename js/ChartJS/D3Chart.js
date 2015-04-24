@@ -1,3 +1,4 @@
+//sample data
 var data = [{
 			"sale": "202",
 			"year": "1999",
@@ -69,8 +70,10 @@ var data = [{
 		})]);
 		
 		//Add y scale for volume chart
-		var y3Scale = d3.scale.linear().range([height3, 0]).domain([0, d3.max(data, function(d) { 
-			return d.volume; 
+		var y3Scale = d3.scale.linear().range([height3, 0]).domain([d3.max(data, function(d) {
+			return d.volume;
+		}), d3.min(data, function(d) {
+			return d.volume;
 		})]);
 		
 		//y scale for navigator
@@ -79,10 +82,10 @@ var data = [{
 		})]);
 		
 		//Axes
-		var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize(-height).outerTickSize(0).tickPadding(5);
+		var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize(-height).outerTickSize(0).tickPadding(5); //move innerTickSize and onwards further down to prevent overlapping
 		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom"); //x2Scale switched to xScale
-		var yAxis = d3.svg.axis().scale(yScale).orient("right").innerTickSize(-width).outerTickSize(0).tickPadding(5);
-		var yAxis2 = d3.svg.axis().scale(y3Scale).orient("right").tickFormat(d3.format("0s")).ticks(5).innerTickSize(-width).outerTickSize(0).tickPadding(5);; //Y Axis for the volume chart
+		var yAxis = d3.svg.axis().scale(yScale).orient("right").innerTickSize(-width).outerTickSize(0).tickPadding(5); //move innerTickSize and onwards further down to prevent overlapping
+		var yAxis2 = d3.svg.axis().scale(y3Scale).orient("right").tickFormat(d3.format("0s")).ticks(5).innerTickSize(-width).outerTickSize(0).tickPadding(5);; //Y Axis for the volume chart and move innerTickSize and onwards further down to prevent overlapping
 		
 		
 		
@@ -163,11 +166,11 @@ var data = [{
 					.data(data)
 					.enter()
 					.append("rect")
-					.attr("y", function(d, i) { return height3 - d.volume; })
-					.attr("x", function(d, i) { return i * width; })
-					.attr("width", 2)
-					.attr("height", function(d, i) { return d.volume; })
-					.attr("class", "volume");		  
+					.attr("class", "volume")
+					.attr("y", function(d, i) { return height3 - d.volume; }) //needs to be adjusted to match the graph
+					.attr("x", function(d, i) { return i * (127); }) //set up so that the spacing scales with the width
+					.attr("width", 3)
+					.attr("height", function(d, i) { return d.volume; }); //needs to be adjusted to match the graph
 		
 		volumeChart.append("g")
 				.attr("class","axis")
