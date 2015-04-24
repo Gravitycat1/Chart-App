@@ -135,7 +135,7 @@ var data = [{
 		
 		//Define the bar chart.
 		var volumeChart = svg.append("g")
-			.attr("class", "focus")
+			.attr("class", "volumeChart")
 			.attr("transform", "translate(" + margin3.left + "," + margin3.top + ")");
 		
         //Defines the navigator
