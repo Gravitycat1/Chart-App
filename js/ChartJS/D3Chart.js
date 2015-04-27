@@ -1,40 +1,57 @@
 //sample data
 var data = [{
+			"volume": "60",
 			"sale": "202",
-			"year": "1999",
+			"year": "1999"
+		}, {
+			"volume": "30",
+			"sale": "215",
+			"year": "2001"
+		}, {
+			"volume": "100",
+			"sale": "179",
+			"year": "2002"
+		}, {
+			"volume": "150",
+			"sale": "199",
+			"year": "2003"
+		}, {
+			"volume": "135",
+			"sale": "134",
+			"year": "2005"
+		}, {
+			"volume": "195",
+			"sale": "176",
+			"year": "2010"
+		}, {
+			"volume": "205",
+			"sale": "200",
+			"year": "2011"
+		}, {
+			"volume": "155",
+			"sale": "301",
+			"year": "2015"
+		}];
+		
+
+var volume = [{
 			"volume": "60"
 		}, {
-			"sale": "215",
-			"year": "2001",
 			"volume": "30"
 		}, {
-			"sale": "179",
-			"year": "2002",
 			"volume": "100"
 		}, {
-			"sale": "199",
-			"year": "2003",
 			"volume": "150"
 		}, {
-			"sale": "134",
-			"year": "2005",
 			"volume": "135"
 		}, {
-			"sale": "176",
-			"year": "2010",
 			"volume": "195"
 		}, {
-			"sale": "200",
-			"year": "2011",
 			"volume": "205"
 		}, {
-			"sale": "301",
-			"year": "2012",
 			"volume": "155"
 		}];
-		//add sample volume data
 		
-        // Add height and margins for the volume chart (added margins and height for the volume chart.)	
 		var marginOfChart = {top: 10, right: 30, bottom: 300, left: 40},
 			marginOfBrush = {top: 560, right: 10, bottom: 20, left: 40},
 			marginOfVolume =  {top: 430, right: 10, bottom: 50, left: 40},
@@ -70,9 +87,7 @@ var data = [{
 		})]);
 		
 		//Add y scale for volume chart
-		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0]).domain([d3.max(data, function(d) {
-			return d.volume;
-		}), d3.min(data, function(d) {
+		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0]).domain([0, d3.max(data, function(d) {
 			return d.volume;
 		})]);
 		
@@ -88,10 +103,10 @@ var data = [{
 									.attr("height", heightOfChart + marginOfChart.top + marginOfChart.bottom);
 		
 		//Axes
-		var xAxisOfChart = d3.svg.axis().scale(xScaleOfChart).orient("bottom"); //move innerTickSize and onwards further down to prevent overlapping
+		var xAxisOfChart = d3.svg.axis().scale(xScaleOfChart).orient("bottom");
 		var xAxisOfBrush = d3.svg.axis().scale(xScaleOfBrush).orient("bottom"); 
-		var yAxisOfChart = d3.svg.axis().scale(yScaleOfChart).orient("right"); //move innerTickSize and onwards further down to prevent overlapping
-		var yAxisOfVolume = d3.svg.axis().scale(yScaleOfVolume).orient("right").tickFormat(d3.format("0s")).ticks(5); //Y Axis for the volume chart and move innerTickSize and onwards further down to prevent overlapping
+		var yAxisOfChart = d3.svg.axis().scale(yScaleOfChart).orient("right");
+		var yAxisOfVolume = d3.svg.axis().scale(yScaleOfVolume).orient("right").tickFormat(d3.format("0s")).ticks(5);
 		
 
 		//Defines the brush.
@@ -174,10 +189,10 @@ var data = [{
 					.enter()
 					.append("rect")
 					.attr("class", "volume")
-					.attr("y", function(d, i) { return heightOfVolume - d.volume; }) //needs to be adjusted to match the graph
-					.attr("x", function(d, i) { return i * (127); }) //set up so that the spacing scales with the width
-					.attr("width", 3)
-					.attr("height", function(d, i) { return d.volume; }); //needs to be adjusted to match the graph
+					.attr("y", function(d) { return yScaleOfVolume(d.volume); }) //needs to be adjusted to match the graph
+					.attr("x", function(d) { return xScaleOfChart(d.year); }) //set up so that the spacing scales with the width
+					.attr("width", 0.98)
+					.attr("height", function(d) { return heightOfVolume - yScaleOfVolume(d.volume); }); //needs to be adjusted to match the graph
 		
 		volumeChart.append("g")
 				.attr("class","axis")

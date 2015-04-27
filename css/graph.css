@@ -9,7 +9,7 @@
 				font-size: 13px;
 			}
 			.area {
-			  fill: rgba(215, 40, 40, 0.6);
+			  fill: rgba(27, 180, 254, 0.3);
 			  clip-path: url(#clip);
 			}
 			.tick text{
@@ -28,5 +28,5 @@
 			.volume {
 				stroke: none;
 				clip-path: url(#clip);
-				fill: MediumPurple;
+				fill: rgba(27, 0, 254, 1);
 			}
