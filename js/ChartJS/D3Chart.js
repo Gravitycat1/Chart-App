@@ -79,6 +79,13 @@ var volume = [{
 			return parseDate(d.year);
 		})]);
 		
+		//x scale for volume
+		var xScaleOfVolume = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
+			return parseDate(d.year);
+		}), d3.max(data, function(d) {
+			return parseDate(d.year);
+		})]);
+		
 		//Y SCALES//
 		 
 		//y scale for main chart
@@ -104,7 +111,8 @@ var volume = [{
 		
 		//Axes
 		var xAxisOfChart = d3.svg.axis().scale(xScaleOfChart).orient("bottom");
-		var xAxisOfBrush = d3.svg.axis().scale(xScaleOfBrush).orient("bottom"); 
+		var xAxisOfBrush = d3.svg.axis().scale(xScaleOfBrush).orient("bottom");
+		var xAxisOfVolume = d3.svg.axis().scale(xScaleOfVolume).orient("bottom"); 
 		var yAxisOfChart = d3.svg.axis().scale(yScaleOfChart).orient("right");
 		var yAxisOfVolume = d3.svg.axis().scale(yScaleOfVolume).orient("right").tickFormat(d3.format("0s")).ticks(5);
 		
@@ -183,16 +191,22 @@ var volume = [{
 				
 		
 		//Append volume chart here.
-		var barPadding = 0.5;
+		//var barPadding = 0.5;
 		volumeChart.selectAll("rect")
 					.data(data)
 					.enter()
 					.append("rect")
 					.attr("class", "volume")
-					.attr("y", function(d) { return yScaleOfVolume(d.volume); }) //needs to be adjusted to match the graph
-					.attr("x", function(d) { return xScaleOfChart(d.year); }) //set up so that the spacing scales with the width
+					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
+					.attr("y", function(d) { return yScaleOfVolume(d.volume); }) //need to properly position the rectangle
+					.attr("x", function(d) { return xScaleOfChart(d.year); }) //need to properly position the rectangle
 					.attr("width", 0.98)
 					.attr("height", function(d) { return heightOfVolume - yScaleOfVolume(d.volume); }); //needs to be adjusted to match the graph
+		
+		volumeChart.append("g")
+				.attr("class","axis")
+				.attr("transform", "translate(0," + heightOfVolume + ")")
+				.call(xAxisOfVolume);
 		
 		volumeChart.append("g")
 				.attr("class","axis")
