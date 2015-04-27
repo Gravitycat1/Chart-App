@@ -35,13 +35,13 @@ var data = [{
 		//add sample volume data
 		
         // Add height and margins for the volume chart (added margins and height for the volume chart.)	
-		var margin = {top: 10, right: 30, bottom: 300, left: 40},
-			margin2 = {top: 560, right: 10, bottom: 20, left: 40},
-			margin3 =  {top: 430, right: 10, bottom: 50, left: 40},
-			width = 960 - margin.left - margin.right,
-			height = 700 - margin.top - margin.bottom,
-			height2 = 640 - margin2.top - margin2.bottom,
-			height3 = 600 - margin3.top - margin3.bottom;
+		var marginOfChart = {top: 10, right: 30, bottom: 300, left: 40},
+			marginOfBrush = {top: 560, right: 10, bottom: 20, left: 40},
+			marginOfVolume =  {top: 430, right: 10, bottom: 50, left: 40},
+			width = 960 - marginOfChart.left - marginOfChart.right,
+			heightOfChart = 700 - marginOfChart.top - marginOfChart.bottom,
+			heightOfBrush = 640 - marginOfBrush.top - marginOfBrush.bottom,
+			heightOfVolume = 600 - marginOfVolume.top - marginOfVolume.bottom;
 		
 		//Format years to scalable time
 		var parseDate = d3.time.format("%Y").parse;
@@ -49,14 +49,14 @@ var data = [{
 		//X SCALE//
 		
 		//x scale for main chart
-		var xScale = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
+		var xScaleOfChart = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
 			return parseDate(d.year);
 		}), d3.max(data, function(d) {
 			return parseDate(d.year);
 		})]);
 		
-		//x scale for navigator
-		var x2Scale = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
+		//x scale for brush
+		var xScaleOfBrush = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
 			return parseDate(d.year);
 		}), d3.max(data, function(d) {
 			return parseDate(d.year);
@@ -65,86 +65,92 @@ var data = [{
 		//Y SCALES//
 		 
 		//y scale for main chart
-		var yScale = d3.scale.linear().range([height,0]).domain([0, d3.max(data, function(d) {
+		var yScaleOfChart = d3.scale.linear().range([heightOfChart,0]).domain([0, d3.max(data, function(d) {
 			return d.sale;
 		})]);
 		
 		//Add y scale for volume chart
-		var y3Scale = d3.scale.linear().range([height3, 0]).domain([d3.max(data, function(d) {
+		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0]).domain([d3.max(data, function(d) {
 			return d.volume;
 		}), d3.min(data, function(d) {
 			return d.volume;
 		})]);
 		
-		//y scale for navigator
-		var y2Scale = d3.scale.linear().range([height2, 0]).domain([0, d3.max(data, function(d) {
+		//y scale for brush
+		var yScaleOfBrush = d3.scale.linear().range([heightOfBrush, 0]).domain([0, d3.max(data, function(d) {
 			return d.sale;
 		})]);
 		
+			
+        //Defines the canvas where the chart will be generated		
+		var svg = d3.select("body").append("svg")
+									.attr("width", width + marginOfChart.left + marginOfChart.right)
+									.attr("height", heightOfChart + marginOfChart.top + marginOfChart.bottom);
+		
 		//Axes
-		var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize(-height).outerTickSize(0).tickPadding(5); //move innerTickSize and onwards further down to prevent overlapping
-		var xAxis2 = d3.svg.axis().scale(x2Scale).orient("bottom"); //x2Scale switched to xScale
-		var yAxis = d3.svg.axis().scale(yScale).orient("right").innerTickSize(-width).outerTickSize(0).tickPadding(5); //move innerTickSize and onwards further down to prevent overlapping
-		var yAxis2 = d3.svg.axis().scale(y3Scale).orient("right").tickFormat(d3.format("0s")).ticks(5).innerTickSize(-width).outerTickSize(0).tickPadding(5);; //Y Axis for the volume chart and move innerTickSize and onwards further down to prevent overlapping
+		var xAxisOfChart = d3.svg.axis().scale(xScaleOfChart).orient("bottom"); //move innerTickSize and onwards further down to prevent overlapping
+		var xAxisOfBrush = d3.svg.axis().scale(xScaleOfBrush).orient("bottom"); 
+		var yAxisOfChart = d3.svg.axis().scale(yScaleOfChart).orient("right"); //move innerTickSize and onwards further down to prevent overlapping
+		var yAxisOfVolume = d3.svg.axis().scale(yScaleOfVolume).orient("right").tickFormat(d3.format("0s")).ticks(5); //Y Axis for the volume chart and move innerTickSize and onwards further down to prevent overlapping
 		
-		
-		
+
 		//Defines the brush.
 		var brush = d3.svg.brush()
-							.x(x2Scale) //x2Scale was switched to xScale
+							.x(xScaleOfBrush) 
 							.on("brush", brushed);
 							
 		var area = d3.svg.area()
 				  .x(function(d) {
-					return xScale(parseDate(d.year));
+					return xScaleOfChart(parseDate(d.year));
 				  })
-				  .y0(height)
+				  .y0(heightOfChart)
 				  .y1(function(d) {
-					return yScale(d.sale);
+					return yScaleOfChart(d.sale);
 				  })
 				  .interpolate("linear");
 		
-		//Define the bars for the volume chart.
+		//Define the bars for the volume chart. I don't think this is relevant any more.
 		var volumeBars = d3.svg.line()
 					.x(function(d) { return x(d.year); })
-					.y(function(d) { return y3Scale(d.volume); });
+					.y(function(d) { return yScaleOfVolume(d.volume); });
 		
-		var area2 = d3.svg.area()
+		var areaOfBrush = d3.svg.area()
 				  .x(function(d) {
-					return x2Scale(parseDate(d.year)); //Switched x2Scale to xScale
+					return xScaleOfBrush(parseDate(d.year));
 				  })
-				  .y0(height2)
+				  .y0(heightOfBrush)
 				  .y1(function(d) {
-					return y2Scale(d.sale);
+					return yScaleOfBrush(d.sale);
 				  })
 				  .interpolate("linear");
-		
-        //Defines the canvas where the chart will be generated		
-		var svg = d3.select("body").append("svg")
-									.attr("width", width + margin.left + margin.right)
-									.attr("height", height + margin.top + margin.bottom);
+	
 		
 		//Assures that the area of the chart remains within the axes, not the canvas.							
 		svg.append("defs").append("clipPath")
 			.attr("id", "clip")
 			.append("rect")
 			.attr("width", width)
-			.attr("height", height);
+			.attr("height", heightOfChart);
 			
 		//Defines the chart.	
 		var focus = svg.append("g")
 			.attr("class", "focus")
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			.attr("transform", "translate(" + marginOfChart.left + "," + marginOfChart.top + ")");
 		
 		//Define the bar chart.
 		var volumeChart = svg.append("g")
 			.attr("class", "volumeChart")
-			.attr("transform", "translate(" + margin3.left + "," + margin3.top + ")");
+			.attr("transform", "translate(" + marginOfVolume.left + "," + marginOfVolume.top + ")");
 		
-        //Defines the navigator
+        //Defines the brush
 		var context = svg.append("g")
 			.attr("class", "context")
-			.attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+			.attr("transform", "translate(" + marginOfBrush.left + "," + marginOfBrush.top + ")");
+			
+		//Grid lines
+		xAxisOfChart.innerTickSize(-heightOfChart).outerTickSize(0).tickPadding(5) ;
+		yAxisOfChart.innerTickSize(-width).outerTickSize(0).tickPadding(5);
+		yAxisOfVolume.innerTickSize(-width).outerTickSize(0).tickPadding(5);
 		
 		//Generates the actual chart.
 		focus.append('path')
@@ -153,12 +159,13 @@ var data = [{
 		     .attr('d', area);		  
 		focus.append("g")
 				.attr("class","axis")
-				.attr("transform", "translate(0," + height + ")")
-				.call(xAxis);
+				.attr("transform", "translate(0," + heightOfChart + ")")
+				.call(xAxisOfChart);
 		focus.append("g")
 				.attr("class","axis")
 				.attr("transform", "translate(" + width + ",0)")
-				.call(yAxis);
+				.call(yAxisOfChart);
+				
 		
 		//Append volume chart here.
 		var barPadding = 0.5;
@@ -167,7 +174,7 @@ var data = [{
 					.enter()
 					.append("rect")
 					.attr("class", "volume")
-					.attr("y", function(d, i) { return height3 - d.volume; }) //needs to be adjusted to match the graph
+					.attr("y", function(d, i) { return heightOfVolume - d.volume; }) //needs to be adjusted to match the graph
 					.attr("x", function(d, i) { return i * (127); }) //set up so that the spacing scales with the width
 					.attr("width", 3)
 					.attr("height", function(d, i) { return d.volume; }); //needs to be adjusted to match the graph
@@ -175,29 +182,32 @@ var data = [{
 		volumeChart.append("g")
 				.attr("class","axis")
 				.attr("transform", "translate(" + width + ",0)")
-				.call(yAxis2);
+				.call(yAxisOfVolume);
 		
-        // Generates the navigator so that the user can navigate through the data	
+		
+		
+        // Generates the brush so that the user can navigate through the data	
 		context.append("path")
 				  .datum(data)
 				  .attr("class", "area")
-				  .attr("d", area2);
+				  .attr("d", areaOfBrush);
 
 	    context.append("g")
 				  .attr("class", "x axis")
-				  .attr("transform", "translate(0," + height2 + ")")
-				  .call(xAxis2);
+				  .attr("transform", "translate(0," + heightOfBrush + ")")
+				  .call(xAxisOfBrush);
 
 	    context.append("g")
 				  .attr("class", "x brush")
 				  .call(brush)
 				  .selectAll("rect")
 				  .attr("y", -6)
-				  .attr("height", height2 + 7);
+				  .attr("height", heightOfBrush + 7);
+		
 		
         //Scroll Function		
 	    function brushed() {
-		  xScale.domain(brush.empty() ? x2Scale.domain() : brush.extent()); //switched x2Scale to xScale
+		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : brush.extent()); 
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
-		  focus.select(".axis").call(xAxis); //Targets the x axis, so that it can be translated.
+		  focus.select(".axis").call(xAxisOfChart); //Targets the x axis, so that it can be translated.
 		}
