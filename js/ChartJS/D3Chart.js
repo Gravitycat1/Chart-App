@@ -184,8 +184,8 @@ var data = [{
 					.append("rect")
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
-					.attr("x", function(d) { return xScaleOfVolume(d.year); }) //need to properly position the rectangle
-					.attr("y", function(d) { return yScaleOfVolume(d.volume); }) //need to properly position the rectangle
+					.attr("x", function(d, i) { return (d.year / width) * i; }) //need to properly position the rectangle
+					.attr("y", function(d, i) { return (d.volume / heightOfVolume) * i; }) //need to properly position the rectangle
 					.attr("width", 0.98)
 					.attr("height", function(d) { return heightOfVolume - yScaleOfVolume(d.volume); }); //needs to be adjusted to match the graph
 		
