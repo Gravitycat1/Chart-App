@@ -1,35 +1,35 @@
 //sample data
 var data = [{
-			"volume": "100",
-			"sale": "202",
+			"volume": "10",
+			"sale": "150",
 			"year": "1999"
 		}, {
-			"volume": "130",
-			"sale": "215",
+			"volume": "20",
+			"sale": "200",
 			"year": "2001"
 		}, {
-			"volume": "100",
-			"sale": "179",
+			"volume": "10",
+			"sale": "150",
 			"year": "2002"
 		}, {
-			"volume": "150",
-			"sale": "199",
+			"volume": "20",
+			"sale": "250",
 			"year": "2003"
 		}, {
-			"volume": "135",
-			"sale": "934",
+			"volume": "10",
+			"sale": "300",
 			"year": "2005"
 		}, {
-			"volume": "195",
-			"sale": "176",
+			"volume": "15",
+			"sale": "250",
 			"year": "2010"
 		}, {
-			"volume": "205",
-			"sale": "200",
+			"volume": "25",
+			"sale": "100",
 			"year": "2011"
 		}, {
-			"volume": "155",
-			"sale": "301",
+			"volume": "35",
+			"sale": "200",
 			"year": "2015"
 		}];
 		
@@ -73,14 +73,14 @@ var data = [{
 		//y scale for main chart
 		var yScaleOfChart = d3.scale.linear().range([heightOfChart,0]).domain([d3.min(data, function(d) {
 			return d.sale;
-		})- 50, d3.max(data, function(d) {
+		}) - 50, d3.max(data, function(d) {
 			return d.sale;
 		})]);
 		
 		//Add y scale for volume chart
 		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0]).domain([d3.min(data, function(d) {
 			return d.volume;
-		})- 50, d3.max(data, function(d) {
+		}), d3.max(data, function(d) {
 			return d.volume;
 		})]);
 		
@@ -184,8 +184,8 @@ var data = [{
 					.append("rect")
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
-					.attr("x", function(d, i) { return i * (255555/ d.year); }) //need to properly position the rectangle
-					.attr("y", function(d) { return (heightOfVolume/ d.volume); }) //need to properly position the rectangle
+					.attr("x", function(d, i) { return i * xScaleOfVolume(d.year) / 16.90; }) //need to properly position the rectangle
+					.attr("y", function(d) { return (heightOfVolume - yScaleOfVolume(d.volume)); }) //need to properly position the rectangle
 					.attr("width", 0.98)
 					.attr("height", function(d) { return yScaleOfVolume(d.volume); }); //needs to be adjusted to match the graph : heightOfVolume - yScaleOfVolume(d.volume);
 		
