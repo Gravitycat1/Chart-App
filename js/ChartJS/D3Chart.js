@@ -184,7 +184,7 @@ var data = [{
 					.append("rect")
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
-					.attr("x", function(d, i) { return i * xScaleOfVolume(d.year) / 16.90; }) //need to properly position the rectangle
+					.attr("x", function(d) { return d.year; }) //need to properly position the rectangle
 					.attr("y", function(d) { return (heightOfVolume - yScaleOfVolume(d.volume)); }) //need to properly position the rectangle
 					.attr("width", 0.98)
 					.attr("height", function(d) { return yScaleOfVolume(d.volume); }); //needs to be adjusted to match the graph : heightOfVolume - yScaleOfVolume(d.volume);
@@ -222,7 +222,9 @@ var data = [{
 		
         //Scroll Function		
 	    function brushed() {
-		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : brush.extent()); 
+		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : brush.extent());
+		  xScaleOfVolume.domain(brush.empty() ? xScaleOfBrush.domain() : brush.extent());
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
-		  focus.select(".axis").call(xAxisOfChart); //Targets the x axis, so that it can be translated.
+		  focus.select(".axis").call(xAxisOfChart);
+		  volumeChart.select(".axis").call(xAxisOfVolume);		  //Targets the x axis, so that it can be translated.
 		}
