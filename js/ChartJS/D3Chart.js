@@ -190,7 +190,7 @@ var data = [{
 					}) //need to properly position the rectangle, pixels are too small. 
 					.attr("y", function(d) { return (heightOfVolume - yScaleOfVolume(d.volume)); }) //need to properly position the rectangle
 					.attr("width", 0.98)
-					.attr("height", function(d) { return yScaleOfVolume(d.volume); }); //needs to be adjusted to match the graph : heightOfVolume - yScaleOfVolume(d.volume);
+					.attr("height", function(d) { return yScaleOfVolume(d.volume); }); //height seems to be inverted, the smallest bar is at 1999 but appears to be the highest, further testing required. 
 		
 		volumeChart.append("g")
 				.attr("class","axis")
