@@ -18,7 +18,7 @@ var data = [{
 		}, {
 			"volume": "10",
 			"sale": "300",
-			"year": "2005"
+			"year": "2007"
 		}, {
 			"volume": "15",
 			"sale": "250",
@@ -38,6 +38,7 @@ var data = [{
 			marginOfBrush = {top: 560, right: 10, bottom: 20, left: 40},
 			marginOfVolume =  {top: 430, right: 10, bottom: 50, left: 40},
 			width = 960 - marginOfChart.left - marginOfChart.right,
+			width2 = 960 - marginOfVolume.left - marginOfVolume.right,
 			heightOfChart = 700 - marginOfChart.top - marginOfChart.bottom,
 			heightOfBrush = 640 - marginOfBrush.top - marginOfBrush.bottom,
 			heightOfVolume = 600 - marginOfVolume.top - marginOfVolume.bottom;
@@ -184,7 +185,9 @@ var data = [{
 					.append("rect")
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
-					.attr("x", function(d) { return d.year; }) //need to properly position the rectangle
+					.attr("x", function(d, i) { 
+						return (((d.year - 1999) / 16) * (width2)); 
+					}) //need to properly position the rectangle, pixels are too small. 
 					.attr("y", function(d) { return (heightOfVolume - yScaleOfVolume(d.volume)); }) //need to properly position the rectangle
 					.attr("width", 0.98)
 					.attr("height", function(d) { return yScaleOfVolume(d.volume); }); //needs to be adjusted to match the graph : heightOfVolume - yScaleOfVolume(d.volume);

@@ -80,7 +80,7 @@ Runner.loadData = function loadData(AppData, stockId){
 	
 		
 		}
-      console.log(data);
+      //console.log(data);
       console.log(priceData); //price data array with every information
 
 	}, function(jqXHR){
