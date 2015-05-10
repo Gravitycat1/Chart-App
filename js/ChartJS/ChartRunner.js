@@ -338,6 +338,6 @@ var data = [{
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
 		  focus.select(".axis").call(xAxisOfChart);
 		  volumeChart.select(".axis").call(xAxisOfVolume);
-		  volumeChart.selectAll("rect").attr("x", function(d) { return ((((2015 - d.year) / 16) * (width2) - 7)); });		  //Targets the x axis, so that it can be translated.
+		  volumeChart.selectAll("rect").attr("x", function(d) { return ((((2015 - d.year) / 16) * (widthOfVolume) - 7)); });		  //Targets the x axis, so that it can be translated.
 		}
 	};
