@@ -185,12 +185,16 @@ var data = [{
 					.append("rect")
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
-					.attr("x", function(d, i) { 
-						return ((((d.year - 1999) / 16) * (-width2)) + width2 - 16); 
-					}) //need to properly position the rectangle, pixels are too small. 
-					.attr("y", function(d) { return ( heightOfVolume - yScaleOfVolume(d.volume) ); }) //need to properly position the rectangle
+					.attr("x", function(d) { 
+						return ((((2015 - d.year) / 16) * (width2) - 7)); 
+					})
+					.attr("y", function(d) { 
+						return ( heightOfVolume - yScaleOfVolume(d.volume) ); 
+					}) //need to properly position the rectangle
 					.attr("width", 0.98)
-					.attr("height", function(d) { return yScaleOfVolume(d.volume); }); //height seems to be inverted, the smallest bar is at 1999 but appears to be the highest, further testing required. 
+					.attr("height", function(d) { 
+						return yScaleOfVolume(d.volume); 
+					}); //height seems to be inverted, the smallest bar is at 1999 but appears to be the highest, further testing required. 
 		
 		volumeChart.append("g")
 				.attr("class","axis")
@@ -225,9 +229,11 @@ var data = [{
 		
         //Scroll Function		
 	    function brushed() {
-		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : brush.extent());
-		  xScaleOfVolume.domain(brush.empty() ? xScaleOfBrush.domain() : brush.extent());
+		var extent = brush.extent();
+		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : extent);
+		  xScaleOfVolume.domain(brush.empty() ? xScaleOfBrush.domain() :  extent);
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
 		  focus.select(".axis").call(xAxisOfChart);
-		  volumeChart.select(".axis").call(xAxisOfVolume);		  //Targets the x axis, so that it can be translated.
+		  volumeChart.select(".axis").call(xAxisOfVolume);
+		  volumeChart.selectAll("rect").attr("x", function(d) { return ((((2015 - d.year) / 16) * (width2) - 7)); });		  //Targets the x axis, so that it can be translated.
 		}
