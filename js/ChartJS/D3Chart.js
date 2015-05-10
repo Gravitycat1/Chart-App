@@ -86,9 +86,7 @@ var data = [{
 		})]);
 		
 		//Add y scale for volume chart
-		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0]).domain([d3.min(data, function(d) {
-			return d.volume;
-		}), d3.max(data, function(d) {
+		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0]).domain([0, d3.max(data, function(d) {
 			return d.volume;
 		})]);
 		
@@ -196,11 +194,11 @@ var data = [{
 						return ((((maxYear - d.year) / length) * (width2) - 7)); 
 					})
 					.attr("y", function(d) { 
-						return ( heightOfVolume - yScaleOfVolume(d.volume) ); 
+						return ( yScaleOfVolume(d.volume) ); 
 					}) //need to properly position the rectangle
 					.attr("width", 3)
 					.attr("height", function(d) { 
-						return 3; 
+						return heightOfVolume - yScaleOfVolume(d.volume); 
 					}); //height seems to be inverted, the smallest bar is at 1999 but appears to be the highest, further testing required. 
 		
 		volumeChart.append("g")
