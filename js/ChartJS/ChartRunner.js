@@ -98,6 +98,8 @@ Runner.loadData = function loadData(AppData, stockId){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //sample data
 console.log(priceData);
+
+function chart() {
 var data = [{
 			"volume": "10",
 			"sale": "150",
@@ -336,3 +338,4 @@ var data = [{
 		  volumeChart.select(".axis").call(xAxisOfVolume);
 		  volumeChart.selectAll("rect").attr("x", function(d) { return ((((2015 - d.year) / 16) * (width2) - 7)); });		  //Targets the x axis, so that it can be translated.
 		}
+	};
