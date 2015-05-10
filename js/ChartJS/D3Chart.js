@@ -64,7 +64,7 @@ var data = [{
 		})]);
 		
 		//x scale for volume
-		var xScaleOfVolume = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
+		var xScaleOfVolume = d3.time.scale().range([width,0]).domain([d3.min(data, function(d) {
 			return parseDate(d.year);
 		}), d3.max(data, function(d) {
 			return parseDate(d.year);
