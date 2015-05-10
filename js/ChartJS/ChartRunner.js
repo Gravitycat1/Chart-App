@@ -100,7 +100,7 @@ Runner.loadData = function loadData(AppData, stockId){
 console.log(priceData);
 
 function chart() {
-	var svg= d3.selectAll('svg').remove();
+	var svg = d3.selectAll('svg').remove();
 	
 
 
