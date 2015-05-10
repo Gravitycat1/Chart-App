@@ -34,7 +34,13 @@ var data = [{
 			"year": "2015"
 		}];
 		
-		
+		var maxYear = d3.max(data, function(d) {
+			return d.year;
+		});
+		 var minYear = d3.min(data, function(d) {
+			return d.year;
+		});
+		 var length = maxYear - minYear;
 		var marginOfChart = {top: 10, right: 30, bottom: 300, left: 40},
 			marginOfBrush = {top: 560, right: 10, bottom: 20, left: 40},
 			marginOfVolume =  {top: 430, right: 10, bottom: 50, left: 40},
@@ -187,14 +193,14 @@ var data = [{
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
 					.attr("x", function(d) { 
-						return ((((2015 - d.year) / 16) * (width2) - 7)); 
+						return ((((maxYear - d.year) / length) * (width2) - 7)); 
 					})
 					.attr("y", function(d) { 
 						return ( heightOfVolume - yScaleOfVolume(d.volume) ); 
 					}) //need to properly position the rectangle
-					.attr("width", 0.98)
+					.attr("width", 3)
 					.attr("height", function(d) { 
-						return yScaleOfVolume(d.volume); 
+						return 3; 
 					}); //height seems to be inverted, the smallest bar is at 1999 but appears to be the highest, further testing required. 
 		
 		volumeChart.append("g")
