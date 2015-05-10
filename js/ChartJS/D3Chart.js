@@ -64,7 +64,7 @@ var data = [{
 		})]);
 		
 		//x scale for volume
-		var xScaleOfVolume = d3.time.scale().range([0, width]).domain([d3.min(data, function(d) {
+		var xScaleOfVolume = d3.time.scale().range([width, 0]).domain([d3.min(data, function(d) {
 			return parseDate(d.year);
 		}), d3.max(data, function(d) {
 			return parseDate(d.year);
@@ -186,19 +186,12 @@ var data = [{
 					.append("rect")
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
-<<<<<<< HEAD
 					.attr("x", function(d) { 
 						return ((((2015 - d.year) / 16) * (width2) - 7)); 
 					})
 					.attr("y", function(d) { 
 						return ( heightOfVolume - yScaleOfVolume(d.volume) ); 
 					}) //need to properly position the rectangle
-=======
-					.attr("x", function(d, i) { 
-						return (((d.year - 1999) / 16) * (width2)); 
-					}) //need to properly position the rectangle, pixels are too small. 
-					.attr("y", function(d) { return (heightOfVolume - yScaleOfVolume(d.volume)); }) //need to properly position the rectangle
->>>>>>> bc1535ecde7d3bcf6cafe053b0769a8160bb6231
 					.attr("width", 0.98)
 					.attr("height", function(d) { 
 						return yScaleOfVolume(d.volume); 
