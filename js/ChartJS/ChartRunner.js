@@ -100,6 +100,10 @@ Runner.loadData = function loadData(AppData, stockId){
 console.log(priceData);
 
 function chart() {
+	var svg= d3.selectAll('svg').remove();
+	
+
+
 var data = [{
 			"volume": "10",
 			"sale": "150",
@@ -133,13 +137,13 @@ var data = [{
 			"sale": "200",
 			"year": "2015"
 		}];
-		
-		
+		 
+
 		var marginOfChart = {top: 10, right: 30, bottom: 300, left: 40},
 			marginOfBrush = {top: 560, right: 10, bottom: 20, left: 40},
 			marginOfVolume =  {top: 430, right: 10, bottom: 50, left: 40},
 			width = 960 - marginOfChart.left - marginOfChart.right,
-			width2 = 960 - marginOfVolume.left - marginOfVolume.right,
+			widthOfVolume = 960 - marginOfVolume.left - marginOfVolume.right,
 			heightOfChart = 700 - marginOfChart.top - marginOfChart.bottom,
 			heightOfBrush = 640 - marginOfBrush.top - marginOfBrush.bottom,
 			heightOfVolume = 600 - marginOfVolume.top - marginOfVolume.bottom;
@@ -287,7 +291,7 @@ var data = [{
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
 					.attr("x", function(d) { 
-						return ((((2015 - d.year) / 16) * (width2) - 7)); 
+						return ((((2015 - d.year) / 16) * (widthOfVolume) - 7)); 
 					})
 					.attr("y", function(d) { 
 						return ( heightOfVolume - yScaleOfVolume(d.volume) ); 

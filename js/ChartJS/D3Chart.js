@@ -80,7 +80,9 @@ var data = [{
 		})]);
 		
 		//Add y scale for volume chart
-		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0]).domain([d3.min(data, function(d) {
+		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0])
+		.domain([
+			d3.min(data, function(d) {
 			return d.volume;
 		}), d3.max(data, function(d) {
 			return d.volume;
