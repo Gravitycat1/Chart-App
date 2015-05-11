@@ -297,7 +297,7 @@ var priceData1 = [{
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
 					.attr("x", function(d) { 
-						return ((((2015 - d.year) / 16) * (widthOfVolume) - 7)); 
+						return ((((maxDate - d.year) / length) * (widthOfVolume) - 7)); 
 					})
 					.attr("y", function(d) { 
 						return (  yScaleOfVolume(d.volume) ); 
