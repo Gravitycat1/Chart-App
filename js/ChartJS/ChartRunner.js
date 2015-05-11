@@ -102,7 +102,7 @@ console.log(priceData);
 function chart() {
 	var svg = d3.selectAll('svg').remove();
 	
-
+console.log(priceData);
 
 var priceData1 = [{
 			"volume": "10",
