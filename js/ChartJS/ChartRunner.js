@@ -151,7 +151,7 @@ var priceData1 = [{
 			heightOfVolume = 600 - marginOfVolume.top - marginOfVolume.bottom;
 		
 		//Format dates to scalable time
-		var parseDate = d3.time.format("%Y").parse;
+		var parseDate = d3.time.format("%L").parse;
 		
 		var maxDate = d3.max(priceData, function(d) {
 			return d.date;
@@ -164,24 +164,24 @@ var priceData1 = [{
 		//X SCALE//
 		
 		//x scale for main chart
-		var xScaleOfChart = d3.time.scale().range([width, 0]).domain([d3.min(priceData, function(d) {
-			return (d.date);
+		var xScaleOfChart = d3.time.scale().range([0, width]).domain([d3.min(priceData, function(d) {
+			return (d.date); //needs to be parsed
 		}), d3.max(priceData, function(d) {
-			return (d.date);
+			return (d.date); //needs to be parsed
 		})]);
 		
 		//x scale for brush
-		var xScaleOfBrush = d3.time.scale().range([width, 0]).domain([d3.min(priceData, function(d) {
-			return (d.date);
+		var xScaleOfBrush = d3.time.scale().range([0, width]).domain([d3.min(priceData, function(d) {
+			return (d.date); //needs to be parsed
 		}), d3.max(priceData, function(d) {
-			return (d.date);
+			return (d.date); //needs to be parsed
 		})]);
 		
 		//x scale for volume
-		var xScaleOfVolume = d3.time.scale().range([width, 0]).domain([d3.min(priceData, function(d) {
-			return (d.date);
+		var xScaleOfVolume = d3.time.scale().range([0, width]).domain([d3.min(priceData, function(d) {
+			return (d.date); //needs to be parsed
 		}), d3.max(priceData, function(d) {
-			return (d.date);
+			return (d.date); //needs to be parsed
 		})]);
 		
 		//Y SCALES//
@@ -224,7 +224,7 @@ var priceData1 = [{
 							
 		var area = d3.svg.area()
 				  .x(function(d) {
-					return xScaleOfChart((d.date));
+					return xScaleOfChart((d.date)); //needs to be parsed
 				  })
 				  .y0(heightOfChart)
 				  .y1(function(d) {
@@ -239,7 +239,7 @@ var priceData1 = [{
 		
 		var areaOfBrush = d3.svg.area()
 				  .x(function(d) {
-					return xScaleOfBrush((d.date));
+					return xScaleOfBrush((d.date)); //needs to be parsed
 				  })
 				  .y0(heightOfBrush)
 				  .y1(function(d) {
@@ -299,7 +299,7 @@ var priceData1 = [{
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
 					.attr("x", function(d) { 
-						return ((((maxDate - d.date) / length) * (widthOfVolume) - 7)); 
+						return ((((d.date - minDate ) / length) * (widthOfVolume) - 7)); 
 					})
 					.attr("y", function(d) { 
 						return (  yScaleOfVolume(d.volume) ); 
@@ -348,6 +348,6 @@ var priceData1 = [{
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
 		  focus.select(".axis").call(xAxisOfChart);
 		  volumeChart.select(".axis").call(xAxisOfVolume);
-		  volumeChart.selectAll("rect").attr("x", function(d) { return ((((maxDate - d.date) / length) * (widthOfVolume) - 7)); });
+		  volumeChart.selectAll("rect").attr("x", function(d) { return ((((d.date - minDate) / length) * (widthOfVolume) - 7)); });
 		}
 	};
