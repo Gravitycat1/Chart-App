@@ -73,7 +73,7 @@ Runner.loadData = function loadData(AppData, stockId){
 	AppData.v1.pricedata.GET(stockId)
 	.then(function(data){
 
-		for (var i = 0; i < 366; i++) {
+		for (var i = 0; i < data.response.data.length; i++) {
 		var fuu = {"volume": data.response.data[i][5], "price": data.response.data[i][1], "date": data.response.data[i][0]}
 		priceData.push(fuu)
 	
