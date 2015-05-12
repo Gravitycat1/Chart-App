@@ -1,8 +1,8 @@
 .container{
     display:table;
-    width:35%;
+    width:45%;
     border-collapse: collapse;
-	border: 2px solid black;
+
     }
 .heading{
      font-weight: bold;
