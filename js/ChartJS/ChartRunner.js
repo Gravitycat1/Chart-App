@@ -153,10 +153,10 @@ var priceData1 = [{
 		//Format dates to scalable time
 		var parseDate = d3.time.format("%Y").parse;
 		
-		var maxDate = d3.max(priceData1, function(d) {
+		var maxDate = d3.max(priceData, function(d) {
 			return d.date;
 		});
-		 var minDate = d3.min(priceData1, function(d) {
+		 var minDate = d3.min(priceData, function(d) {
 			return d.date;
 		});
 		
@@ -164,42 +164,42 @@ var priceData1 = [{
 		//X SCALE//
 		
 		//x scale for main chart
-		var xScaleOfChart = d3.time.scale().range([width, 0]).domain([d3.min(priceData1, function(d) {
-			return parseDate(d.date);
-		}), d3.max(priceData1, function(d) {
-			return parseDate(d.date);
+		var xScaleOfChart = d3.time.scale().range([width, 0]).domain([d3.min(priceData, function(d) {
+			return (d.date);
+		}), d3.max(priceData, function(d) {
+			return (d.date);
 		})]);
 		
 		//x scale for brush
-		var xScaleOfBrush = d3.time.scale().range([width, 0]).domain([d3.min(priceData1, function(d) {
-			return parseDate(d.date);
-		}), d3.max(priceData1, function(d) {
-			return parseDate(d.date);
+		var xScaleOfBrush = d3.time.scale().range([width, 0]).domain([d3.min(priceData, function(d) {
+			return (d.date);
+		}), d3.max(priceData, function(d) {
+			return (d.date);
 		})]);
 		
 		//x scale for volume
-		var xScaleOfVolume = d3.time.scale().range([width, 0]).domain([d3.min(priceData1, function(d) {
-			return parseDate(d.date);
-		}), d3.max(priceData1, function(d) {
-			return parseDate(d.date);
+		var xScaleOfVolume = d3.time.scale().range([width, 0]).domain([d3.min(priceData, function(d) {
+			return (d.date);
+		}), d3.max(priceData, function(d) {
+			return (d.date);
 		})]);
 		
 		//Y SCALES//
 		 
 		//y scale for main chart
-		var yScaleOfChart = d3.scale.linear().range([heightOfChart,0]).domain([d3.min(priceData1, function(d) {
+		var yScaleOfChart = d3.scale.linear().range([heightOfChart,0]).domain([d3.min(priceData, function(d) {
 			return d.price;
-		}) - 50, d3.max(priceData1, function(d) {
+		}) - 50, d3.max(priceData, function(d) {
 			return d.price;
 		})]);
 		
 		//Add y scale for volume chart
-		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0]).domain([0, d3.max(priceData1, function(d) {
+		var yScaleOfVolume = d3.scale.linear().range([heightOfVolume, 0]).domain([0, d3.max(priceData, function(d) {
 			return d.volume;
 		})]);
 		
 		//y scale for brush
-		var yScaleOfBrush = d3.scale.linear().range([heightOfBrush, 0]).domain([0, d3.max(priceData1, function(d) {
+		var yScaleOfBrush = d3.scale.linear().range([heightOfBrush, 0]).domain([0, d3.max(priceData, function(d) {
 			return d.price;
 		})]);
 		
@@ -224,7 +224,7 @@ var priceData1 = [{
 							
 		var area = d3.svg.area()
 				  .x(function(d) {
-					return xScaleOfChart(parseDate(d.date));
+					return xScaleOfChart((d.date));
 				  })
 				  .y0(heightOfChart)
 				  .y1(function(d) {
@@ -239,7 +239,7 @@ var priceData1 = [{
 		
 		var areaOfBrush = d3.svg.area()
 				  .x(function(d) {
-					return xScaleOfBrush(parseDate(d.date));
+					return xScaleOfBrush((d.date));
 				  })
 				  .y0(heightOfBrush)
 				  .y1(function(d) {
@@ -277,7 +277,7 @@ var priceData1 = [{
 		
 		//Generates the actual chart.
 		focus.append('path')
-		     .datum(priceData1)
+		     .datum(priceData)
 		     .attr("class", "area")
 		     .attr('d', area);		  
 		focus.append("g")
@@ -293,7 +293,7 @@ var priceData1 = [{
 		//Append volume chart here.
 		//var barPadding = 0.5;
 		volumeChart.selectAll("rect")
-					.data(priceData1)
+					.data(priceData)
 					.enter()
 					.append("rect")
 					.attr("class", "volume")
@@ -323,7 +323,7 @@ var priceData1 = [{
 		
         // Generates the brush so that the user can navigate through the data	
 		context.append("path")
-				  .datum(priceData1)
+				  .datum(priceData)
 				  .attr("class", "area")
 				  .attr("d", areaOfBrush);
 
