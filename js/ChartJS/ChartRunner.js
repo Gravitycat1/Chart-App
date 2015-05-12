@@ -205,7 +205,7 @@ var priceData1 = [{
 		
 			
         //Defines the canvas where the chart will be generated		
-		var svg = d3.select("body").append("svg")
+		var svg = d3.select("body").select(".table-row").append("svg")
 									.attr("width", width + marginOfChart.left + marginOfChart.right)
 									.attr("height", heightOfChart + marginOfChart.top + marginOfChart.bottom);
 		

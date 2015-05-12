@@ -18,7 +18,11 @@
 			<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 			<link href="http://getbootstrap.com/examples/justified-nav/justified-nav.css" rel="stylesheet">
 			<link href="css/graph.css" rel="stylesheet">
-			
+			<link rel="stylesheet" type="text/css" href="css/loading-anim.css">
+			<link rel="stylesheet" type="text/css" href="css/main.css">
+			<link rel="stylesheet" type="text/css" href="css/TableWindow.css">
+			<link rel="stylesheet" type="text/css" href="css/style.css">
+			<link rel="stylesheet" type="text/css" media="screen" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" />
 		<!-- CSS -->
 		<!-- Supplementary Code -->
 		
@@ -30,8 +34,22 @@
 	</head>
 	
 	<body>
-
-		<input type="button" value="press me" onclick="chart();">
+	<h1>Chart App Test</h1>
+	
+	<div class="container">
+		<div class="heading">
+			 <div class="col">Price Chart</div>
+			 <span class="ion-gear-b" data-pack="default" onclick ="settings();"></span>
+		</div>
+		<div class="table-row">
+				<input id="stock" class= "stockInput" type="text" name="currency"></input><input type="submit" value="Submit" id="ticker-btn" onClick = "loadChart();">
+				<input type="button" value="press me" onclick="chart();">
+				
+				<div id= "chart"></div>
+				
+		</div>
+	</div>
+		
 	 <!--<script src="js/ChartJS/D3Chart.js"></script>-->
 	</body>
 	
