@@ -89,17 +89,39 @@ Runner.loadData = function loadData(AppData, stockId){
 	}).then(function(){
 		checks ++;
 		if(checks === 2){
+			Runner.toggleOverhead();
 		}
 	});
 
 	return AppData;
 	flag = 1;
 };
+
+/**
+ * Toggles the overhead animation
+ * @return {Number} old opacity settings
+ */
+Runner.toggleOverhead = function toggleOverhead() {
+
+	var op = Math.ceil(parseFloat($('.overhead span').css('opacity')));
+
+ 	if( op === 1){
+ 		$('.overhead').css({height:0});
+ 		$('.overhead div').css({opacity:0});
+ 		$('.overhead span').css({opacity:0});
+ 	} else if( op === 0 ) {
+ 		$('.overhead').css({height:'100%'});
+ 		$('.overhead div').css({opacity:1});
+ 		$('.overhead span').css({opacity:1});		
+ 	}
+
+ 	return op;
+};
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-function chart() {
+function Chart() {
 	var svg = d3.selectAll('svg').remove();
 	
 console.log(priceData);
