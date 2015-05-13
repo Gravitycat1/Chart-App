@@ -350,5 +350,5 @@ var priceData1 = [{
 		  volumeChart.select(".axis").call(xAxisOfVolume);
 		  volumeChart.selectAll("rect").attr("x", function(d) { return ((((d.date - minDate) / length) * (widthOfVolume) - 7)); });
 		}
-		priceData = new Array ();
+		
 	};
