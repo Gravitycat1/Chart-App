@@ -44,6 +44,7 @@ StockRender.AppRender.register({
 		$('#ticker-btn').click(function(){
 				Runner.toggleOverhead();					
 				Runner.loadData(AppData, $('#stock')[0].value);
+				//Runner.Chart(data1);
 				return;
 		});
 
@@ -51,6 +52,7 @@ StockRender.AppRender.register({
 			if( e.which === 13 ) {
 				Runner.toggleOverhead();
 				Runner.loadData(AppData, $('#stock')[0].value);
+				//Runner.Chart(data1);
 				return;
 			}
 		})

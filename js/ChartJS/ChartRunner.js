@@ -13,9 +13,10 @@ function Runner() {}
  *    
  */
 
-  var priceData = new Array ();
-  var dateOfData = new Array();
+  //var priceData = new Array ();
+  var dataArray = new Array();
   var i = 0;
+  var count = 0;
   var flag;
 Runner.loadData = function loadData(AppData, stockId){
  	var checks = 0;
@@ -75,13 +76,12 @@ Runner.loadData = function loadData(AppData, stockId){
 
 		for (var i = 0; i < data.response.data.length; i++) {
 		var fuu = {"volume": data.response.data[i][5], "price": data.response.data[i][1], "date": data.response.data[i][0]}
-		priceData.push(fuu)
-	
-		console.log(priceData)
-		
+		dataArray.push(fuu)
+		console.log(dataArray)
 		}
-      //console.log(data);
-      console.log(data); //price data array with every information
+		
+	   console.log("Done! Retrieval Finished.")
+	   Runner.Chart(dataArray)
 
 	}, function(jqXHR){
 
@@ -121,47 +121,13 @@ Runner.toggleOverhead = function toggleOverhead() {
 
 
 
-function Chart() {
+Runner.Chart = function Chart(priceData) {
+	
 	var svg = d3.selectAll('svg').remove();
 	
-console.log(priceData);
+        console.log(priceData);
+		console.log("Data transfer to function above. This array is the priceData array.");
 
-var priceData1 = [{
-			"volume": "10",
-			"price": "150",
-			"date": "1999"
-		}, {
-			"volume": "20",
-			"price": "200",
-			"date": "2001"
-		}, {
-			"volume": "10",
-			"price": "150",
-			"date": "2002"
-		}, {
-			"volume": "20",
-			"price": "250",
-			"date": "2003"
-		}, {
-			"volume": "10",
-			"price": "300",
-			"date": "2007"
-		}, {
-			"volume": "15",
-			"price": "250",
-			"date": "2010"
-		}, {
-			"volume": "25",
-			"price": "100",
-			"date": "2011"
-		}, {
-			"volume": "35",
-			"price": "200",
-			"date": "2015"
-		}];
-	
-	console.log(priceData1);
-		 
 
 		var marginOfChart = {top: 10, right: 30, bottom: 300, left: 40},
 			marginOfBrush = {top: 560, right: 10, bottom: 20, left: 40},
@@ -373,4 +339,9 @@ var priceData1 = [{
 		  volumeChart.selectAll("rect").attr("x", function(d) { return ((((d.date - minDate) / length) * (widthOfVolume) - 7)); });
 		}
 		
+		//Clear data array for next use.
+		dataArray = new Array();
 	};
+	
+	
+	
