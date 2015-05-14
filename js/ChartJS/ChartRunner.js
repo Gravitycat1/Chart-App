@@ -13,10 +13,10 @@ function Runner() {}
  *    
  */
 
-  //var priceData = new Array ();
   var dataArray = new Array();
   var i = 0;
   var count = 0;
+  var skipper = 15;
   var flag;
 Runner.loadData = function loadData(AppData, stockId){
  	var checks = 0;
@@ -73,8 +73,20 @@ Runner.loadData = function loadData(AppData, stockId){
 	//-----------------------------------------
 	AppData.v1.pricedata.GET(stockId)
 	.then(function(data){
+		
+//If 1 day skipper is 1
+//If 5 days skipper is 1
+//If 1 month skipper is 1
+//If 2 months skipper is 1
+//If 6 months skipper is 1
+//If YTD (beginning of the year to today) skipper is 1
+//If 1 year skipper is 5
+//If 5 years skipper is 5
+//If 10 years skipper is 15?
+//If all skipper is 30
+		
 
-		for (var i = 0; i < data.response.data.length; i++) {
+		for (var i = 0; i < data.response.data.length; i = i + skipper) {
 		var fuu = {"volume": data.response.data[i][5], "price": data.response.data[i][1], "date": data.response.data[i][0]}
 		dataArray.push(fuu)
 		console.log(dataArray)
@@ -177,7 +189,7 @@ Runner.Chart = function Chart(priceData) {
 		//y scale for main chart
 		var yScaleOfChart = d3.scale.linear().range([heightOfChart,0]).domain([d3.min(priceData, function(d) {
 			return d.price;
-		}) - 50, d3.max(priceData, function(d) {
+		}) - 5, d3.max(priceData, function(d) {
 			return d.price;
 		})]);
 		
@@ -219,11 +231,6 @@ Runner.Chart = function Chart(priceData) {
 					return yScaleOfChart(d.price);
 				  })
 				  .interpolate("linear");
-		
-		//Define the bars for the volume chart. I don't think this is relevant any more.
-		var volumeBars = d3.svg.line()
-					.x(function(d) { return x(d.date); })
-					.y(function(d) { return yScaleOfVolume(d.volume); });
 		
 		var areaOfBrush = d3.svg.area()
 				  .x(function(d) {
