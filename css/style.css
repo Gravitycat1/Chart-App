@@ -20,3 +20,70 @@ Adds the styling for the setting icon in the header
 	cursor: pointer; 
 	text-decoration: underline;
 	}
+
+	
+#settings {
+	border: 1px solid black;
+	height: 125px;
+	width: 350px;
+	position: absolute;
+	top: 105px;
+	left: 70px;
+}
+
+#lblText {
+	position: absolute;
+	top: 10px;
+	left: 30px;
+	height: 20px;
+	width: 100px;
+}
+#inpText {
+	position: absolute;
+	top: 8px;
+	left: 95px;
+	height: 20px;
+	width: 40px;
+}
+#fundimental {
+	position: absolute;
+	top: 90px;
+	left: 130px;
+	height: 27px;
+	width: 100px;
+}
+#lblTextColor {
+	position: absolute;
+	top: 10px;
+	left: 180px;
+	height: 20px;
+	width: 100px;
+}
+#inpTextColor {
+	position: absolute;
+	top: 10px;
+	left: 260px;
+	height: 20px;
+	width: 50px;
+}
+#inpColorScheme1 {
+	position: absolute;
+	top: 50px;
+	left: 140px;
+	height: 20px;
+	width: 50px;
+}
+#inpColorScheme2 {
+	position: absolute;
+	top: 50px;
+	left: 210px;
+	height: 20px;
+	width: 50px;
+}
+#lblColor {
+	position: absolute;
+	top: 53px;
+	left: 30px;
+	height: 20px;
+	width: 100px;
+}

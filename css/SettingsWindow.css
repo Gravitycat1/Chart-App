@@ -1,0 +1,27 @@
+.container{
+    display:table;
+    width:49.5%;
+    border-collapse: collapse;
+	border: 2px solid black;
+    }
+.heading{
+     font-weight: bold;
+     display:table-row;
+     background-color:#D3D3D3;
+     text-align: center;
+     line-height: 25px;
+     font-size: 14px;
+     font-family:georgia;
+     color:#000000;
+	 border: 2px solid black;
+	 text-align: center;
+    
+}
+.table-row{  
+     display:table-row;
+     text-align: center;
+	 border: 2px solid black;
+}
+.col{
+display:table-cell;
+}

@@ -14,6 +14,9 @@
  			<script src="js/ChartJS/D3JS/d3.min.js" charset="utf-8"></script>
 			<script src="js/ChartJS/ChartRunner.js"></script>
 			<script src="js/ChartJS/ChartMain.js"></script>
+			<script src="js/ChartJS/ShowHideSettings.js"></script>
+			<script src="js/ChartJS/Settings.js"></script>
+			<script src="jscolor-1.4.4/jscolor/jscolor.js"></script>
 		<!-- JS -->
 		<!-- CSS -->
 			<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -29,12 +32,25 @@
 	</head>
 	
 	<body>
-	<div class="container">
+	
+	<div id="settings" title="Settings">
+	<span class="ion-gear-b" data-pack="default" onClick = "toggle2();"></span>
+		<script>  $("#settings").hide(); </script>
+    	<label id = "lblText">Text Size: </label>
+    	<label id = "lblColor">Color Scheme: </label>
+    	<label id = "lblTextColor">Text Color: </label>
+    	<input id = "inpTextColor" class="color" value="000000"></input>
+    	<input id = "inpColorScheme1" class="color" value="A8C6FA"></input>
+    	<input id = "inpColorScheme2" class="color" value="FFFFFF"></input>
+    	<input id = "inpText" type="number" min="5" max="30" step="1" value="16">
+	</div>
+	
+	<div class="container" id= "container">
 		<div class="heading">
 			 <div class="col">Price Chart</div>
-			 <span class="ion-gear-b" data-pack="default" onclick ="settings();"></span>
+			 <span class="ion-gear-b" data-pack="default" onclick ="toggle1();"></span>
 		</div>
-		<div class="table-row">
+		<div class="table-row" id= "table-row">
 				<input id="stock" class= "stockInput" type="text" name="currency"></input><input type="submit" value="Submit" id="ticker-btn">
 				
 				<div id= "chart"></div>

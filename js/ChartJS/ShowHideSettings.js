@@ -1,15 +1,16 @@
 $(document).ready(function(){
-					$("#container2").hide();
+					$("#settings").hide();
 			});
 function toggle1() {
 	$(document).ready(function(){
-					$("#container1").hide();
-					$("#container2").show();
+					$("#container").hide();
+					$("#settings").show();
 			});
 }
 function toggle2() {
 	$(document).ready(function(){
-					$("#container2").hide();
-					$("#container1").show();
+					Settings_all();
+					$("#settings").hide();
+					$("#container").show();
 			});
 }
