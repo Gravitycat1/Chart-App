@@ -14,6 +14,7 @@ function Runner() {}
  */
 
   var dataArray = new Array();
+  var dataArray1 = new Array();
   var i = 0;
   var count = 0;
   var skipper = 15;
@@ -94,7 +95,7 @@ Runner.loadData = function loadData(AppData, stockId){
 		
 	   console.log("Done! Retrieval Finished.")
 	   Runner.Chart(dataArray)
-
+	   
 	}, function(jqXHR){
 
 		throw new Error('Failed to load data!',jqXHR);
