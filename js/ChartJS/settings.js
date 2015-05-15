@@ -13,9 +13,9 @@ function Settings_textSize () {
 	
 	changeSize = newTextSize + "px";
 				
-	var emLength = document.getElementsByTagName('tr').length;
+	var emLength = document.getElementsByTagName('div').length;
 	for(var x = 0; x < emLength; x++) {
-		document.getElementsByTagName('tr')[x].style.fontSize = changeSize;
+		document.getElementsByTagName('div')[x].style.fontSize = changeSize;
 	}
 }
 
@@ -62,6 +62,5 @@ function Settings_rowColor () {
 
 function Settings_all () {
 	Settings_textSize();
-	Settings_textColor();
-	Settings_rowColor();
+	
 }
