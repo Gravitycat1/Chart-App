@@ -18,7 +18,17 @@ Adds the styling for the setting icon in the header
 .legend  {float: left;  margin-right: 0.7em}
 .stockInput  {float: right; margin-right: 0.7em}
 .ticker-btn  {float: right; margin-right: 0.7em}
-.zoomTime {float: left; margin-right: 0.7em}
+.zoomIndicator {
+           float: left; 
+           margin-right: 0.7em;
+		   }
+		   
+.zoomTime {float: left; 
+           margin-right: 0.7em;
+		   color: blue; 
+	       cursor: pointer; 
+	       text-decoration: underline;
+		   }
 
 .zoom {
 	color: blue; 
