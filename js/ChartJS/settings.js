@@ -62,5 +62,6 @@ function Settings_rowColor () {
 
 function Settings_all () {
 	Settings_textSize();
-	
+	Settings_textColor();
+	Settings_rowColor();
 }
