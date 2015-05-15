@@ -205,8 +205,18 @@ Runner.Chart = function Chart(priceData) {
 		})]);
 		
 			
-        //Defines the canvas where the chart will be generated		
-		var svg = d3.select("body").select(".table-row").append("svg")
+        //Defines the canvas where the chart will be generated	
+        var svgLegend = d3.select("body").select("#table-row").select("#legend").append("svg")
+                                     .attr("width", 250)
+                                     .attr("height", 25);	
+		
+		var legend = svgLegend.append("rect")
+                           .attr("x", 0)
+                           .attr("y", 0)
+                           .attr("width", 250)
+                           .attr("height", 25);
+									 
+		var svg = d3.select("body").select("#table-row").select("#chart").append("svg")
 									.attr("width", width + marginOfChart.left + marginOfChart.right)
 									.attr("height", heightOfChart + marginOfChart.top + marginOfChart.bottom);
 		

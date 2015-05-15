@@ -15,6 +15,11 @@ Adds the styling for the setting icon in the header
 ***************************/
 .ion-gear-b {float: right; margin-right: 0.7em; cursor: pointer;}
 
+.legend  {float: left;}
+.stockInput  {float: right;}
+.ticker-btn  {float: right;}
+.zoomTime {float: left;}
+
 .zoom {
 	color: blue; 
 	cursor: pointer; 
