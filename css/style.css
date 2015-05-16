@@ -29,13 +29,7 @@ Adds the styling for the setting icon in the header
 	       cursor: pointer; 
 	       text-decoration: underline;
 		   }
-
-.zoom {
-	color: blue; 
-	cursor: pointer; 
-	text-decoration: underline;
-	}
-
+#chart {margin-top: 3.7em;}
 	
 #settings {
 	border: 1px solid black;

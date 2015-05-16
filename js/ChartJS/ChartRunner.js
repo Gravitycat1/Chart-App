@@ -170,7 +170,7 @@ Runner.Chart = function Chart(priceData) {
 		}), d3.max(priceData, function(d) {
 			return (d.date); //needs to be parsed
 		})]);
-		
+	
 		//x scale for brush
 		var xScaleOfBrush = d3.time.scale().range([0, width]).domain([d3.min(priceData, function(d) {
 			return (d.date); //needs to be parsed
@@ -184,6 +184,8 @@ Runner.Chart = function Chart(priceData) {
 		}), d3.max(priceData, function(d) {
 			return (d.date); //needs to be parsed
 		})]);
+		
+		var xScaleOfVolume1 = d3.scale.linear();
 		
 		//Y SCALES//
 		 
@@ -345,6 +347,9 @@ Runner.Chart = function Chart(priceData) {
 				  .attr("y", -6)
 				  .attr("height", heightOfBrush + 7);
 		
+		//Clear data array for next use.
+		dataArray = new Array();
+		
 		
         //Scroll Function		
 	    function brushed() {
@@ -354,12 +359,15 @@ Runner.Chart = function Chart(priceData) {
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
 		  focus.select(".axis").call(xAxisOfChart);
 		  volumeChart.select(".axis").call(xAxisOfVolume);
-		  volumeChart.selectAll("rect").attr("x", function(d) { return ((((d.date - minDate) / length) * (widthOfVolume) - 7)); });
-		}
+		  volumeChart.select(".volume").attr("x", function(d) { return ((((d.date - minDate) / length) * (widthOfVolume) - 7)); }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
 		
-		//Clear data array for next use.
-		dataArray = new Array();
+			//focus.append('path')
+		     //.datum(priceData)
+		     //.attr("class", "area")
+		     //.attr('d', area);		
+		
+		
 	};
 	
 	
-	
+}	
