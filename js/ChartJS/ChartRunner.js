@@ -185,7 +185,7 @@ Runner.Chart = function Chart(priceData) {
 			return (d.date); //needs to be parsed
 		})]);
 		
-		var xScaleOfVolume1 = d3.scale.linear().range([d3.min(priceData, function(d) { //temporary, testing applicability 
+		var xScaleOfVolumeBars = d3.scale.linear().range([d3.min(priceData, function(d) { //temporary, testing applicability of making a one-to-one dummy scale in order to hook up x coordinates to brush
 			return (d.date); //needs to be parsed
 		}), d3.max(priceData, function(d) {
 			return (d.date); //needs to be parsed
@@ -315,7 +315,7 @@ Runner.Chart = function Chart(priceData) {
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
 					.attr("x", function(d) { 
-						return (xScaleOfVolume1((((d.date - minDate ) / length) * (widthOfVolume) - 7)));  //temporary, testing applicability 
+						return (xScaleOfVolumeBars((((d.date - minDate ) / length) * (widthOfVolume) - 7)));  //temporary, testing applicability 
 					})
 					.attr("y", function(d) { 
 						return (  yScaleOfVolume(d.volume) ); 
@@ -366,11 +366,11 @@ Runner.Chart = function Chart(priceData) {
 		var rangeWidth  = rangeExtent[1] - rangeExtent[0];
 		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : extent); //scales the chart by editing the domain of the main chart. This domain attribute is ripped directly from the one above that initially defines it.
 		  xScaleOfVolume.domain(brush.empty() ? xScaleOfBrush.domain() :  extent);
-		  xScaleOfVolume1.domain(brush.empty() ? xScaleOfBrush.domain() :  extent); //temporary, testing applicability 
+		  xScaleOfVolumeBars.domain(brush.empty() ? xScaleOfBrush.domain() :  extent); //temporary, testing applicability 
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
 		  focus.select(".axis").call(xAxisOfChart);
 		  volumeChart.select(".axis").call(xAxisOfVolume);
-		  volumeChart.selectAll(".volume").attr("x", function(d) { return (xScaleOfVolume1((((d.date - minDate) / length) * (widthOfVolume) - 7))); }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
+		  volumeChart.selectAll(".volume").attr("x", function(d) { return (xScaleOfVolumeBars((((d.date - minDate) / length) * (widthOfVolume) - 7))); }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
 		
 			//focus.append('path')
 		     //.datum(priceData)
