@@ -13,6 +13,10 @@ Styling for the Autocomplete
 Adds the styling for the setting icon in the header
 ****************************
 ***************************/
+
+#settings {float: left; margin-left: 0.7em;}
+#container{float: left; margin-left: 0.7em;}
+
 .ion-gear-b {float: right; margin-right: 0.7em; cursor: pointer;}
 
 .legend  {float: left;  margin-right: 0.7em}

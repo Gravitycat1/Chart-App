@@ -365,21 +365,16 @@ Runner.Chart = function Chart(priceData) {
         //Scroll Function		
 	    function brushed() {
 		var extent = brush.extent();
-		var rangeExtent = [xScaleOfBrush( extent[0] ), xScaleOfBrush( extent[1] ) ]; //convert
-		var rangeWidth  = rangeExtent[1] - rangeExtent[0];
+		//var rangeExtent = [xScaleOfBrush( extent[0] ), xScaleOfBrush( extent[1] ) ]; //convert
+		//var rangeWidth  = rangeExtent[1] - rangeExtent[0];
 		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : extent); //scales the chart by editing the domain of the main chart. This domain attribute is ripped directly from the one above that initially defines it.
 		  xScaleOfVolume.domain(brush.empty() ? xScaleOfBrush.domain() :  extent);
 		  xScaleOfVolumeBars.domain(brush.empty() ? xScaleOfBrush.domain() :  extent); //temporary, testing applicability 
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
 		  focus.select(".axis").call(xAxisOfChart);
 		  volumeChart.select(".axis").call(xAxisOfVolume);
-		  volumeBars.selectAll(".volume").attr("x", function(d) { return xScaleOfVolumeBars((((d.date - minDate) / length) * (widthOfVolume) - 7)); }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
-		
-			//focus.append('path')
-		     //.datum(priceData)
-		     //.attr("class", "area")
-		     //.attr('d', area);		
-		
+		  volumeBars.selectAll(".volume").attr("x", 
+		  function(d) { return xScaleOfVolumeBars((((d.date - minDate) / length) * (widthOfVolume) - 7)); }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
 		
 	};
 	
