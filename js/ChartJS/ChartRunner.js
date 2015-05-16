@@ -185,11 +185,7 @@ Runner.Chart = function Chart(priceData) {
 			return (d.date); //needs to be parsed
 		})]);
 		
-		var xScaleOfVolumeBars = d3.scale.linear().range([d3.min(priceData, function(d) { //temporary, testing applicability of making a one-to-one dummy scale in order to hook up x coordinates to brush
-			return (d.date); //needs to be parsed
-		}), d3.max(priceData, function(d) {
-			return (d.date); //needs to be parsed
-		})]).domain([d3.min(priceData, function(d) {
+		var xScaleOfVolumeBars = d3.scale.linear().range([0, width]).domain([d3.min(priceData, function(d) {
 			return (d.date); //needs to be parsed
 		}), d3.max(priceData, function(d) {
 			return (d.date); //needs to be parsed
@@ -318,7 +314,7 @@ Runner.Chart = function Chart(priceData) {
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
 					.attr("x", function(d) { 
-						return (xScaleOfVolumeBars((((d.date - minDate ) / length) * (widthOfVolume)))) / -1000000000;  //temporary, testing applicability 
+						return xScaleOfVolumeBars(d.date)  //temporary, testing applicability 
 					})
 					.attr("y", function(d) { 
 						return (  yScaleOfVolume(d.volume) ); 
@@ -374,7 +370,7 @@ Runner.Chart = function Chart(priceData) {
 		  focus.select(".axis").call(xAxisOfChart);
 		  volumeChart.select(".axis").call(xAxisOfVolume);
 		  volumeBars.selectAll(".volume").attr("x", 
-		  function(d) { return (xScaleOfVolumeBars((((d.date - minDate ) / length) * (widthOfVolume)))) / -1000000000; }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
+		  function(d) { return xScaleOfVolumeBars(d.date) }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
 		
 	};
 	
