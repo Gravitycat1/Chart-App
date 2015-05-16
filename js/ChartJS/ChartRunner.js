@@ -318,7 +318,7 @@ Runner.Chart = function Chart(priceData) {
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
 					.attr("x", function(d) { 
-						return xScaleOfVolumeBars((((d.date - minDate ) / length) * (widthOfVolume) - 7));  //temporary, testing applicability 
+						return (xScaleOfVolumeBars((((d.date - minDate ) / length) * (widthOfVolume)))) / -1000000000;  //temporary, testing applicability 
 					})
 					.attr("y", function(d) { 
 						return (  yScaleOfVolume(d.volume) ); 
@@ -374,7 +374,7 @@ Runner.Chart = function Chart(priceData) {
 		  focus.select(".axis").call(xAxisOfChart);
 		  volumeChart.select(".axis").call(xAxisOfVolume);
 		  volumeBars.selectAll(".volume").attr("x", 
-		  function(d) { return xScaleOfVolumeBars((((d.date - minDate) / length) * (widthOfVolume) - 7)); }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
+		  function(d) { return (xScaleOfVolumeBars((((d.date - minDate ) / length) * (widthOfVolume)))) / -1000000000; }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
 		
 	};
 	
