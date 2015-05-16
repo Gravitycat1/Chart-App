@@ -281,6 +281,9 @@ Runner.Chart = function Chart(priceData) {
 			.attr("class", "volumeChart")
 			.attr("transform", "translate(" + marginOfVolume.left + "," + marginOfVolume.top + ")");
 		
+		var volumeBars = volumeChart.append("g");
+		volumeBars.attr("clip-path", "url(#clip)");
+		
         //Defines the brush
 		var context = svg.append("g")
 			.attr("class", "context")
@@ -308,14 +311,14 @@ Runner.Chart = function Chart(priceData) {
 		
 		//Append volume chart here.
 		//var barPadding = 0.5;
-		volumeChart.selectAll("rect")
+		volumeBars.selectAll(".volume")
 					.data(priceData)
 					.enter()
 					.append("rect")
 					.attr("class", "volume")
 					//The top-left corner of the rectangle is positioned using the x and y attributes, while its size is specified using width and height.
 					.attr("x", function(d) { 
-						return (xScaleOfVolumeBars((((d.date - minDate ) / length) * (widthOfVolume) - 7)));  //temporary, testing applicability 
+						return xScaleOfVolumeBars((((d.date - minDate ) / length) * (widthOfVolume) - 7));  //temporary, testing applicability 
 					})
 					.attr("y", function(d) { 
 						return (  yScaleOfVolume(d.volume) ); 
@@ -370,7 +373,7 @@ Runner.Chart = function Chart(priceData) {
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
 		  focus.select(".axis").call(xAxisOfChart);
 		  volumeChart.select(".axis").call(xAxisOfVolume);
-		  volumeChart.selectAll(".volume").attr("x", function(d) { return (xScaleOfVolumeBars((((d.date - minDate) / length) * (widthOfVolume) - 7))); }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
+		  volumeBars.selectAll(".volume").attr("x", function(d) { return xScaleOfVolumeBars((((d.date - minDate) / length) * (widthOfVolume) - 7)); }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
 		
 			//focus.append('path')
 		     //.datum(priceData)
