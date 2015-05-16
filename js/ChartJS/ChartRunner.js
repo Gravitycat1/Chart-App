@@ -362,7 +362,9 @@ Runner.Chart = function Chart(priceData) {
         //Scroll Function		
 	    function brushed() {
 		var extent = brush.extent();
-		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : extent);
+		var rangeExtent = [xScaleOfBrush( extent[0] ), xScaleOfBrush( extent[1] ) ]; //convert
+		var rangeWidth  = rangeExtent[1] - rangeExtent[0];
+		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : extent); //scales the chart by editing the domain of the main chart. This domain attribute is ripped directly from the one above that initially defines it.
 		  xScaleOfVolume.domain(brush.empty() ? xScaleOfBrush.domain() :  extent);
 		  xScaleOfVolume1.domain(brush.empty() ? xScaleOfBrush.domain() :  extent); //temporary, testing applicability 
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
