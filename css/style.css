@@ -37,7 +37,7 @@ Adds the styling for the setting icon in the header
 	
 #settings {
 	border: 1px solid black;
-	height: 125px;
+	height: 175px;
 	width: 350px;
 	position: absolute;
 	top: 105px;
@@ -55,44 +55,71 @@ Adds the styling for the setting icon in the header
 	position: absolute;
 	top: 8px;
 	left: 95px;
-	height: 20px;
-	width: 40px;
+	height: 25px;
+	width: 50px;
 }
-#fundimental {
-	position: absolute;
-	top: 90px;
-	left: 130px;
-	height: 27px;
-	width: 100px;
-}
+
 #lblTextColor {
 	position: absolute;
 	top: 10px;
 	left: 180px;
 	height: 20px;
-	width: 100px;
+	width: 105px;
 }
 #inpTextColor {
 	position: absolute;
 	top: 10px;
 	left: 260px;
 	height: 20px;
-	width: 50px;
+	width: 65px;
 }
 #inpColorScheme1 {
 	position: absolute;
 	top: 50px;
 	left: 140px;
 	height: 20px;
-	width: 50px;
+	width: 65px;
 }
 #inpColorScheme2 {
 	position: absolute;
 	top: 50px;
 	left: 210px;
 	height: 20px;
-	width: 50px;
+	width: 65px;
 }
+
+#inpColorScheme3 {
+	position: absolute;
+	top: 75px;
+	left: 140px;
+	height: 20px;
+	width: 65px;
+}
+
+#inpColorScheme4 {
+	position: absolute;
+	top: 75px;
+	left: 210px;
+	height: 20px;
+	width: 65px;
+}
+
+#inpColorScheme5 {
+	position: absolute;
+	top: 100px;
+	left: 140px;
+	height: 20px;
+	width: 65px;
+}
+
+#inpColorScheme6 {
+	position: absolute;
+	top: 100px;
+	left: 210px;
+	height: 20px;
+	width: 65px;
+}
+
 #lblColor {
 	position: absolute;
 	top: 53px;

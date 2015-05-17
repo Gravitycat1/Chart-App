@@ -185,7 +185,7 @@ Runner.Chart = function Chart(priceData) {
 			return (d.date); //needs to be parsed
 		})]);
 		
-		var xScaleOfVolumeBars = d3.scale.linear().range([0, width]).domain([d3.min(priceData, function(d) {
+		var xScaleOfVolumeBars = d3.time.scale().range([0, width]).domain([d3.min(priceData, function(d) {
 			return (d.date); //needs to be parsed
 		}), d3.max(priceData, function(d) {
 			return (d.date); //needs to be parsed
@@ -319,15 +319,10 @@ Runner.Chart = function Chart(priceData) {
 					.attr("y", function(d) { 
 						return (  yScaleOfVolume(d.volume) ); 
 					}) //need to properly position the rectangle
-					.attr("width", 0.58)
+					.attr("width", 1)
 					.attr("height", function(d) { 
 						return heightOfVolume - yScaleOfVolume(d.volume); 
 					}); //height seems to be inverted, the smallest bar is at 1999 but appears to be the highest, further testing required. 
-		
-		volumeChart.append("g")
-				.attr("class","axis")
-				.attr("transform", "translate(0," + heightOfVolume + ")")
-				.call(xAxisOfVolume);
 		
 		volumeChart.append("g")
 				.attr("class","axis")
@@ -368,7 +363,6 @@ Runner.Chart = function Chart(priceData) {
 		  xScaleOfVolumeBars.domain(brush.empty() ? xScaleOfBrush.domain() :  extent); //temporary, testing applicability 
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
 		  focus.select(".axis").call(xAxisOfChart);
-		  volumeChart.select(".axis").call(xAxisOfVolume);
 		  volumeBars.selectAll(".volume").attr("x", 
 		  function(d) { return xScaleOfVolumeBars(d.date) }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
 		

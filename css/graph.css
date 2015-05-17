@@ -8,7 +8,8 @@
 				font-size: 13px;
 			}
 			.area {
-			  fill: rgba(27, 180, 254, 0.3);
+			  fill: #A8C6FA;
+			  stroke: #0000FF;
 			  clip-path: url(#clip);
 			}
 			.tick text{
