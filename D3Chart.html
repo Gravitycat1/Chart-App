@@ -17,6 +17,7 @@
 			<script src="js/ChartJS/ShowHideSettings.js"></script>
 			<script src="js/ChartJS/Settings.js"></script>
 			<script src="jscolor-1.4.4/jscolor/jscolor.js"></script>
+			<script src="js/ChartJS/d3Tip/index.js"></script>
 		<!-- JS -->
 		<!-- CSS -->
 			<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -76,6 +77,74 @@
 	</div>
 		
 	 <!--<script src="js/ChartJS/D3Chart.js"></script>-->
+	 <style type="text/css">
+    body {
+    padding: 40px;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 9px;
+    height: 1000px;
+  }
+
+  .d3-tip { /*this is the tooltip creation.*/
+    line-height: 0; /*height */
+    font-weight: bold; /*bold, etc */
+    padding: 1 px; /* could be modified, as well as line height for each determinant setting in settings */
+    background: rgba(50, 50, 52, 1.0); /*Back ground colour callers, could be modded by settings. */
+    color: #000000; /*dont know what this is for...*/
+    border-radius: 0px; /*higher values call for rounder object, the opposite? square edges... */
+  }
+
+  .d3-tip:after { 
+    box-sizing: border-box;
+    display: inline;
+    font-size: 12px; /*dont know what this calls!*/
+    width: 00%; /*moves the little triangle thing in the bottom of the object. */
+    line-height: 12; /*what is this for?*/
+    color: rgba(0, 0, 0, 0); /*this too?*/
+    content: "\0"; /* got rid of the triangle thing... */
+    position: absolute;
+    text-align: left; /*wut */
+  }
+
+  .d3-tip.n:after { /*...*/
+    margin: -5px 0 0 0;
+    top: 100%;
+    left: 0;
+  }
+
+  .d3-tip span {
+    color: #000000; /*colour of text, can be modded by settings*/
+  }
+
+  .domain {
+    display: none;
+  }
+
+
+  rect {  /*governs bars*/
+    fill: #000000;
+    fill-opacity: 0.7;
+  }
+
+  .volume:hover {/*yet again, covers bars, mind you this is HTML!!! important */
+    fill: #038E92;
+
+  }
+ /*this is the block where the strict tooltip will show up (.legend) */
+  .legend { 
+    fill: rgb(0,0,255);/*play around positioning...*/
+  }
+
+  div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 12px;
+  font: 15px sans-serif;
+  pointer-events: none;
+}
+
+  </style>
 	</body>
 	
 </html>

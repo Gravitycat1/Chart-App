@@ -212,6 +212,10 @@ Runner.Chart = function Chart(priceData) {
 		
 			
         //Defines the canvas where the chart will be generated	
+        var svgTooltip = d3.select("body").select("#table-row").select("#tooltip").append("svg")
+                                     .attr("width", 250)
+                                     .attr("height", 25);
+
         var svgLegend = d3.select("body").select("#table-row").select("#legend").append("svg")
                                      .attr("width", 250)
                                      .attr("height", 25);	
@@ -221,6 +225,12 @@ Runner.Chart = function Chart(priceData) {
                            .attr("y", 0)
                            .attr("width", 250)
                            .attr("height", 25);
+
+        var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .html(function(d) { return '<span>' + d.volume.toFixed(2) + '</span>' + ' dollar value of stock at ' + '<span>' + d.price + '</span>' + ' dollars per share.' })
+        .offset([-12, 0]);
+
 									 
 		var svg = d3.select("body").select("#table-row").select("#chart").append("svg")
 									.attr("width", width + marginOfChart.left + marginOfChart.right)
@@ -233,6 +243,34 @@ Runner.Chart = function Chart(priceData) {
 		var yAxisOfChart = d3.svg.axis().scale(yScaleOfChart).orient("right");
 		var yAxisOfVolume = d3.svg.axis().scale(yScaleOfVolume).orient("right").tickFormat(d3.format("0s")).ticks(5);
 		
+		var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 1e-6);
+
+var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+function mouseover() { //functions
+  div.transition()
+      .duration(500)
+      .style("opacity", 1);
+}
+
+function mousemove() {
+  div
+      .text(d3.event.pageX + ", " + d3.event.pageY)
+      .style("left", (d3.event.pageX - 34) + "px")
+      .style("top", (d3.event.pageY - 12) + "px");
+}
+
+function mouseout() {
+  div.transition()
+      .duration(500)
+      .style("opacity", 1e-6);
+}
+
 
 		//Defines the brush.
 		var brush = d3.svg.brush()
@@ -279,6 +317,15 @@ Runner.Chart = function Chart(priceData) {
 		
 		var volumeBars = volumeChart.append("g");
 		volumeBars.attr("clip-path", "url(#clip)");
+
+		 volumeBars.call(tip) //modify for our chart. have to get this working!
+        var legend = svgLegend.append('rect')
+        .attr('width', 250) // have to add the tooltip and mouseover commands.
+        .attr('height', 1)
+        .attr('x', 50) //assumed that this is positioning
+        .attr('y', 20)
+        .attr('class', 'legend'); //assign class
+
 		
         //Defines the brush
 		var context = svg.append("g")
@@ -294,7 +341,10 @@ Runner.Chart = function Chart(priceData) {
 		focus.append('path')
 		     .datum(priceData)
 		     .attr("class", "area")
-		     .attr('d', area);		  
+		     .attr('d', area)		  
+		     .on("mouseover", mouseover)
+   		     .on("mousemove", mousemove)
+    	     .on("mouseout", mouseout);
 		focus.append("g")
 				.attr("class","axis")
 				.attr("transform", "translate(0," + heightOfChart + ")")
@@ -322,8 +372,11 @@ Runner.Chart = function Chart(priceData) {
 					.attr("width", 1)
 					.attr("height", function(d) { 
 						return heightOfVolume - yScaleOfVolume(d.volume); 
-					}); //height seems to be inverted, the smallest bar is at 1999 but appears to be the highest, further testing required. 
-		
+					}) //height seems to be inverted, the smallest bar is at 1999 but appears to be the highest, further testing required. 
+		.on('mouseout', tip.hide)
+                    .on('mouseover', function(d) { // <--- this function is important, so is the one above! this will show the tooltip.
+                      tip.show(d, legend.node())
+                                          });
 		volumeChart.append("g")
 				.attr("class","axis")
 				.attr("transform", "translate(" + width + ",0)")
