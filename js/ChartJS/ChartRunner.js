@@ -86,7 +86,7 @@ Runner.loadData = function loadData(AppData, stockId){
 //If 10 years skipper is 15?
 //If all skipper is 30
 		
-
+console.log(data.response.data)
 		for (var i = 0; i < data.response.data.length; i = i + skipper) {
 		var fuu = {"volume": data.response.data[i][5], "price": data.response.data[i][1], "date": data.response.data[i][0]}
 		dataArray.push(fuu)
