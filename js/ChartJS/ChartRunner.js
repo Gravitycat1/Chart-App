@@ -166,29 +166,29 @@ Runner.Chart = function Chart(priceData) {
 		
 		//x scale for main chart
 		var xScaleOfChart = d3.time.scale().range([0, width]).domain([d3.min(priceData, function(d) {
-			return (d.date); //needs to be parsed
+			return (d.date); 
 		}), d3.max(priceData, function(d) {
-			return (d.date); //needs to be parsed
+			return (d.date); 
 		})]);
 	
 		//x scale for brush
 		var xScaleOfBrush = d3.time.scale().range([0, width]).domain([d3.min(priceData, function(d) {
-			return (d.date); //needs to be parsed
+			return (d.date); 
 		}), d3.max(priceData, function(d) {
-			return (d.date); //needs to be parsed
+			return (d.date); 
 		})]);
 		
 		//x scale for volume
 		var xScaleOfVolume = d3.time.scale().range([0, width]).domain([d3.min(priceData, function(d) {
-			return (d.date); //needs to be parsed
+			return (d.date); 
 		}), d3.max(priceData, function(d) {
-			return (d.date); //needs to be parsed
+			return (d.date); 
 		})]);
 		
 		var xScaleOfVolumeBars = d3.time.scale().range([0, width]).domain([d3.min(priceData, function(d) {
-			return (d.date); //needs to be parsed
+			return (d.date); 
 		}), d3.max(priceData, function(d) {
-			return (d.date); //needs to be parsed
+			return (d.date); 
 		})]);
 		
 		//Y SCALES//
@@ -281,7 +281,7 @@ Runner.Chart = function Chart(priceData) {
 							
 		var area = d3.svg.area()
 				  .x(function(d) {
-					return xScaleOfChart((d.date)); //needs to be parsed
+					return xScaleOfChart((d.date)); 
 				  })
 				  .y0(heightOfChart)
 				  .y1(function(d) {
@@ -291,7 +291,7 @@ Runner.Chart = function Chart(priceData) {
 		
 		var areaOfBrush = d3.svg.area()
 				  .x(function(d) {
-					return xScaleOfBrush((d.date)); //needs to be parsed
+					return xScaleOfBrush((d.date)); 
 				  })
 				  .y0(heightOfBrush)
 				  .y1(function(d) {
@@ -425,13 +425,13 @@ Runner.Chart = function Chart(priceData) {
 		var extent = brush.extent();
 		//var rangeExtent = [xScaleOfBrush( extent[0] ), xScaleOfBrush( extent[1] ) ]; //convert
 		//var rangeWidth  = rangeExtent[1] - rangeExtent[0];
-		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : extent); //scales the chart by editing the domain of the main chart. This domain attribute is ripped directly from the one above that initially defines it.
+		  xScaleOfChart.domain(brush.empty() ? xScaleOfBrush.domain() : extent); 
 		  xScaleOfVolume.domain(brush.empty() ? xScaleOfBrush.domain() :  extent);
-		  xScaleOfVolumeBars.domain(brush.empty() ? xScaleOfBrush.domain() :  extent); //temporary, testing applicability 
+		  xScaleOfVolumeBars.domain(brush.empty() ? xScaleOfBrush.domain() :  extent); 
 		  focus.select(".area").attr("d", area); //Targets the area, so that it can be translated.
 		  focus.select(".axis").call(xAxisOfChart);
 		  volumeBars.selectAll(".volume").attr("x", 
-		  function(d) { return xScaleOfVolumeBars(d.date) }); //issue confirmed, the rectangles don't have a scale therefore the brush can't lock onto them
+		  function(d) { return xScaleOfVolumeBars(d.date) });
 		
 	};
 	
