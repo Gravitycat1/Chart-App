@@ -142,10 +142,10 @@ Runner.Chart = function Chart(priceData) {
 		console.log("Data transfer to function above. This array is the priceData array.");
 
 
-		var marginOfChart = {top: 10, right: 30, bottom: 300, left: 40},
+		var marginOfChart = {top: 10, right: 50, bottom: 300, left: 50},
 			marginOfBrush = {top: 560, right: 10, bottom: 20, left: 40},
 			marginOfVolume =  {top: 430, right: 10, bottom: 50, left: 40},
-			width = 960 - marginOfChart.left - marginOfChart.right,
+			width = 980 - marginOfChart.left - marginOfChart.right,
 			widthOfVolume = 960 - marginOfVolume.left - marginOfVolume.right,
 			heightOfChart = 700 - marginOfChart.top - marginOfChart.bottom,
 			heightOfBrush = 640 - marginOfBrush.top - marginOfBrush.bottom,
@@ -224,11 +224,13 @@ Runner.Chart = function Chart(priceData) {
                            .attr("x", 0)
                            .attr("y", 0)
                            .attr("width", 250)
-                           .attr("height", 25);
+                           .attr("height", 25)
+						   .attr("class", "legend");
 
         var tip = d3.tip()
         .attr('class', 'd3-tip')
-        .html(function(d) { return '<span>' + d.volume.toFixed(2) + '</span>' + ' dollar value of stock at ' + '<span>' + d.price + '</span>' + ' dollars per share.' })
+        .html(function(d) { return '<span>' + d.volume.toFixed(2) + '</span>' + ' dollar value of stock at ' 
+		+ '<span>' + d.price + '</span>' + ' dollars per share.' })
         .offset([-12, 0]);
 
 									 
@@ -247,29 +249,29 @@ Runner.Chart = function Chart(priceData) {
     .attr("class", "tooltip")
     .style("opacity", 1e-6);
 
-var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+		var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
-var x = d3.time.scale()
-    .range([0, width]);
+		var x = d3.time.scale()
+			.range([0, width]);
 
-function mouseover() { //functions
-  div.transition()
-      .duration(500)
-      .style("opacity", 1);
-}
+		function mouseover() { //functions
+		  div.transition()
+			  .duration(500)
+			  .style("opacity", 1);
+		}
 
-function mousemove() {
-  div
-      .text(d3.event.pageX + ", " + d3.event.pageY)
-      .style("left", (d3.event.pageX - 34) + "px")
-      .style("top", (d3.event.pageY - 12) + "px");
-}
+		function mousemove() {
+		  div
+			  .text(d3.event.pageX + ", " + d3.event.pageY)
+			  .style("left", (d3.event.pageX - 34) + "px")
+			  .style("top", (d3.event.pageY - 12) + "px");
+		}
 
-function mouseout() {
-  div.transition()
-      .duration(500)
-      .style("opacity", 1e-6);
-}
+		function mouseout() {
+		  div.transition()
+			  .duration(500)
+			  .style("opacity", 1e-6);
+		}
 
 
 		//Defines the brush.
@@ -322,7 +324,7 @@ function mouseout() {
         var legend = svgLegend.append('rect')
         .attr('width', 250) // have to add the tooltip and mouseover commands.
         .attr('height', 1)
-        .attr('x', 50) //assumed that this is positioning
+        .attr('x', 0) //assumed that this is positioning
         .attr('y', 20)
         .attr('class', 'legend'); //assign class
 
@@ -352,7 +354,13 @@ function mouseout() {
 		focus.append("g")
 				.attr("class","axis")
 				.attr("transform", "translate(" + width + ",0)")
-				.call(yAxisOfChart);
+				.call(yAxisOfChart)
+				.append("text")
+				  .attr("transform", "rotate(-90)")
+				  .attr("y", 6)
+				  .attr("dy", "2.3em")
+				  .style("text-anchor", "end")
+				  .text("Price ($)");
 				
 		
 		//Append volume chart here.
