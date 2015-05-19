@@ -143,8 +143,8 @@ Runner.Chart = function Chart(priceData) {
 
 
 		var marginOfChart = {top: 10, right: 50, bottom: 300, left: 50},
-			marginOfBrush = {top: 560, right: 10, bottom: 20, left: 40},
-			marginOfVolume =  {top: 430, right: 10, bottom: 50, left: 40},
+			marginOfBrush = {top: 560, right: 50, bottom: 20, left: 50},
+			marginOfVolume =  {top: 430, right: 50, bottom: 50, left: 50},
 			width = 980 - marginOfChart.left - marginOfChart.right,
 			widthOfVolume = 960 - marginOfVolume.left - marginOfVolume.right,
 			heightOfChart = 700 - marginOfChart.top - marginOfChart.bottom,
@@ -388,7 +388,13 @@ Runner.Chart = function Chart(priceData) {
 		volumeChart.append("g")
 				.attr("class","axis")
 				.attr("transform", "translate(" + width + ",0)")
-				.call(yAxisOfVolume);
+				.call(yAxisOfVolume)
+				.append("text")
+				  .attr("transform", "rotate(-90)")
+				  .attr("y", 6)
+				  .attr("dy", "2.6em")
+				  .style("text-anchor", "end")
+				  .text("Volume");
 		
 		
 		
